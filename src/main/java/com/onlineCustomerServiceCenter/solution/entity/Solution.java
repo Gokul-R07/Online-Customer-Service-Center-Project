@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.solution;
+package com.onlineCustomerServiceCenter.solution.entity;
 
 
 import jakarta.persistence.Column;

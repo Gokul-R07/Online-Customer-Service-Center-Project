@@ -1,22 +1,22 @@
-package com.onlineCustomerServiceCenter.operator;
+package com.onlineCustomerServiceCenter.operator.dto;
 
 public class IssueSolutionDto {
-    private String issueId;
+    private Integer issueId;
     private String solutionDescription;
 
     public IssueSolutionDto() {
     }
 
-    public IssueSolutionDto(String issueId, String solutionDescription) {
+    public IssueSolutionDto(Integer issueId, String solutionDescription) {
         this.issueId = issueId;
         this.solutionDescription = solutionDescription;
     }
 
-    public String getIssueId() {
+    public Integer getIssueId() {
         return issueId;
     }
 
-    public void setIssueId(String issueId) {
+    public void setIssueId(Integer issueId) {
         this.issueId = issueId;
     }
 

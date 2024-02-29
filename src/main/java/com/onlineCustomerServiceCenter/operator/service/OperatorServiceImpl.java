@@ -1,10 +1,16 @@
-package com.onlineCustomerServiceCenter.operator;
+package com.onlineCustomerServiceCenter.operator.service;
 
 import com.onlineCustomerServiceCenter.issue.Issue;
 import com.onlineCustomerServiceCenter.issue.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.IssueService;
-import com.onlineCustomerServiceCenter.solution.Solution;
-import com.onlineCustomerServiceCenter.solution.SolutionService;
+import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.operator.dao.OperatorRespository;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.service.OperatorService;
+import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
+import com.onlineCustomerServiceCenter.solution.entity.Solution;
+import com.onlineCustomerServiceCenter.solution.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +27,6 @@ public class OperatorServiceImpl implements OperatorService {
     private SolutionService solutionService;
     @Autowired
     private IssueService issueService;
-
 
 
     @Override
@@ -47,20 +52,11 @@ public class OperatorServiceImpl implements OperatorService {
         return this.operatorRespository.save(updatedoperator);
     }
     @Override
-    public Issue addIssueSolution(String issueId, String solutionDescription) {
-      Optional<Issue> issueOptional=  this.issueRepository.findById(Integer.parseInt(issueId));
-      if(issueOptional.isPresent()){
-          Issue issue=issueOptional.get();
-
-//        Solution solution= solutionService.createSolution(solutionDescription);
-//          this.
-//          issue.getSolutions().add();
-
+    public Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException {
+         Issue issue=  this.issueService.getIssueById(issueId);
          Solution solution= solutionService.createSolution(solutionDescription);
-//        issueService.addSolutionToIssue(issueId,solution);
-//        return this.issueService.getIssueById(issueId);
-
-      }
-        return null;
+        issueService.addSolutionToIssueById(issueId,solution);
+        return this.issueService.getIssueById(issueId);
     }
+
 }

@@ -1,7 +1,7 @@
-package com.onlineCustomerServiceCenter.solution;
+package com.onlineCustomerServiceCenter.solution.controller;
 
+import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

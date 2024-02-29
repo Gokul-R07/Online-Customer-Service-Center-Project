@@ -1,7 +1,7 @@
 package com.onlineCustomerServiceCenter.operator;
 
-import com.onlineCustomerServiceCenter.customer.Customer;
 import com.onlineCustomerServiceCenter.issue.Issue;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 
 public interface OperatorService {
 

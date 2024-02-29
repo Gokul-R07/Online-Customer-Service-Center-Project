@@ -1,6 +1,6 @@
 package com.onlineCustomerServiceCenter.admin;
 
-import com.onlineCustomerServiceCenter.operator.Operator;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.springframework.stereotype.Service;
 
 @Service
