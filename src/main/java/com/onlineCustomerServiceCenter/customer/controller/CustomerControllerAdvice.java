@@ -17,7 +17,7 @@ public class CustomerControllerAdvice {
     }
     @ExceptionHandler(value={CustomerLoginException.class})
     public ResponseEntity<String>CustomerLoginExceptionHandler(CustomerLoginException e){
-        return  new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return  new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
     @ExceptionHandler(value={CustomerUpdateException.class})
     public ResponseEntity<String>CustomerUpdateExceptionHandler(CustomerUpdateException e){

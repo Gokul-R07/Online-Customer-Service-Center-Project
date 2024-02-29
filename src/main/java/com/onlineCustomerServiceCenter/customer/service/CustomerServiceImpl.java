@@ -7,11 +7,8 @@ import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
 import com.onlineCustomerServiceCenter.issue.IssueRepository;
-import org.apache.juli.logging.Log;
-import org.apache.tomcat.util.net.jsse.JSSEUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new CustomerRegisterException("Email already registered, please re try."+newCustomer.getEmail());
         return this.customerRepository.save(newCustomer);
     }
+    @Override
     public Customer loginCustomer(String customerEmail,String customerPassword) throws CustomerLoginException {
         Optional<Customer> customerOpt = this.customerRepository.findByEmail(customerEmail);
         if(customerOpt.isEmpty())
@@ -42,25 +40,32 @@ public class CustomerServiceImpl implements CustomerService {
 
         return foundCustomer;
     }
+    @Override
     public Customer updateCustomer(Customer customer) throws CustomerUpdateException {
         Optional<Customer> customerOpt = this.customerRepository.findById(customer.getCustomerId());
         if(customerOpt.isEmpty())
             throw new CustomerUpdateException("Customer does not exists for :"+customer.getCustomerId());
         return this.customerRepository.save(customer);
     }
+    @Override
     public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
     }
+    @Override
     public Customer getCustomerById(Integer customerId){
         return this.customerRepository.findById(customerId).get();
     }
-    public Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException {
+
+
+   @Override
+   public Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException {
         Optional<Customer> customerOpt = this.customerRepository.findById(customerId);
 
         if (customerOpt.isEmpty()) {
             throw new CustomerDeleteException("Customer does not exist for ID: " + customerId);
         }
             this.customerRepository.deleteById(customerId);
-            return customerOpt.get();
+            Customer customerToBeDeleted= customerOpt.get();
+            return  customerToBeDeleted;
     }
 }

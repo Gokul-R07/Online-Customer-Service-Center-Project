@@ -11,7 +11,6 @@ import com.onlineCustomerServiceCenter.issue.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -19,8 +18,6 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private IssueService issueService;
     @Autowired
     private SolutionService solutionService;
 

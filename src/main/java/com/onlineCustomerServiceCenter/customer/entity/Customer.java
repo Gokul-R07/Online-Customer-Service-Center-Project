@@ -1,5 +1,6 @@
 package com.onlineCustomerServiceCenter.customer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlineCustomerServiceCenter.issue.Issue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +46,7 @@ public class Customer {
     @NotBlank(message = "customer name cannot be null")
     @Pattern(regexp = "^\\d{10}$")
     private String phoneNumber;
+    @JsonIgnore
     @OneToMany
     private List<Issue> issues = new ArrayList<>();
 
