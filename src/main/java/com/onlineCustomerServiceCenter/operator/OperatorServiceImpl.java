@@ -56,7 +56,7 @@ public class OperatorServiceImpl implements OperatorService {
 //          this.
 //          issue.getSolutions().add();
 
-         Solution solution= solutionService.createSolution(solutionDescription);
+//         Solution solution= solutionService.createSolution(solutionDescription);
 //        issueService.addSolutionToIssue(issueId,solution);
 //        return this.issueService.getIssueById(issueId);
 

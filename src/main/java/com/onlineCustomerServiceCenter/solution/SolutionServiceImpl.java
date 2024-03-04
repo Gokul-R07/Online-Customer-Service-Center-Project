@@ -12,10 +12,10 @@ public class SolutionServiceImpl implements SolutionService{
     @Autowired
     private  SolutionRepository solutionRepository;
 
-    @Override
-    public Solution createSolution(Solution newsolution) {
-        return this.solutionRepository.save(newsolution);
-    }
+//    @Override
+//    public Solution createSolution(Solution newsolution) {
+//        return this.solutionRepository.save(newsolution);
+//    }
 
     @Override
     public Solution createSolution(String solutionDescription) throws SolutionException{

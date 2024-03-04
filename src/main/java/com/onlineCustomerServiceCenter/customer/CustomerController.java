@@ -28,8 +28,9 @@ public class CustomerController {
     }
     @PostMapping("customer/login")
 	public Customer userAccountLogin(@RequestBody CustomerLoginDto loginDto) throws CustomerLoginException{
-		return this.customerService.customerLogin(loginDto.getUserEmail(), loginDto.getCustomerPassword());
-	}
+		//return this.customerService.customerLogin(loginDto.getUserEmail(), loginDto.getCustomerPassword());
+	return null;
+    }
     @PutMapping("customer/update")
     public Customer updateCustomerProfile(@RequestBody Customer customer) throws CustomerUpdateException{
         return this.customerService.updateCustomer(customer);
