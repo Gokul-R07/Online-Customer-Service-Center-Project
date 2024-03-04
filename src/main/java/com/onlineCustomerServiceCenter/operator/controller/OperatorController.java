@@ -1,12 +1,16 @@
 package com.onlineCustomerServiceCenter.operator.controller;
 
-import com.onlineCustomerServiceCenter.issue.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
+import com.onlineCustomerServiceCenter.operator.dto.PasswordDto;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
+import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
+import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
+import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.operator.dto.IssueSolutionDto;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +19,38 @@ public class OperatorController {
     @Autowired
     private OperatorService operatorService;
     @GetMapping("operator")
-    public String loginOperator(@RequestParam OperatorLoginDto operatorLoginDto){
-        return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
+    public String loginOperator( @RequestParam OperatorLoginDto operatorLoginDto){
+        try {
+            return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
+        } catch (OperatorNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IncorrectPasswordException e) {
+            throw new RuntimeException(e);
+        } catch (NullException e) {
+            throw new RuntimeException(e);
+        }
     }
-    @PutMapping("operator")
-    public Operator updateOperatorProfile(@RequestBody Operator updatedoperator){
-        return this.operatorService.updateOperatorProfile(updatedoperator);
+    @PatchMapping("operator")
+    public String changePassword(@RequestBody PasswordDto passwordDto){
+            try {
+                return this.operatorService.changePassword(passwordDto.getOperatorId(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
+
+            } catch (OperatorNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IncorrectPasswordException e) {
+                throw new RuntimeException(e);
+            } catch (NullException e) {
+                throw new RuntimeException(e);
+            }
+
     }
     @PostMapping("operator/solution")
-    public Issue addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto){
+    public String addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto){
         try {
-            return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(),issueSolutionDto.getSolutionDescription());
-        } catch (SolutionException e) {
-            throw new RuntimeException(e);
+            return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(),issueSolutionDto.getSolutionDescription(),issueSolutionDto.getOperatorId());
         } catch (IssueNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (NullException e) {
             throw new RuntimeException(e);
         }
     }

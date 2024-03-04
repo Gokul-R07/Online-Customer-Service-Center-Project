@@ -26,6 +26,11 @@ public class Solution {
     public Solution() {
     }
 
+    public Solution(String solutionDescription, Integer operatorId) {
+        this.solutionDescription = solutionDescription;
+        this.operatorId = operatorId;
+    }
+
     public Solution(String solutionDescription) {
         this.solutionDescription = solutionDescription;
     }
