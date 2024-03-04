@@ -1,7 +1,7 @@
 package com.onlineCustomerServiceCenter.issue;
 
 
-import com.onlineCustomerServiceCenter.solution.Solution;
+import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

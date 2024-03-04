@@ -1,8 +1,10 @@
-package com.onlineCustomerServiceCenter.admin;
+package com.onlineCustomerServiceCenter.admin.service;
 
-
-import com.onlineCustomerServiceCenter.operator.Operator;
+import com.onlineCustomerServiceCenter.admin.model.Admin;
 
 public interface AdminService {
-    Operator createOperator(Operator newOperator);
+
+    Admin registerAdmin(Admin newAdmin);
+
+    Admin loginAdmin(String email, String password);
 }

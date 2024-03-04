@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.operator;
+package com.onlineCustomerServiceCenter.operator.dto;
 
 public class OperatorLoginDto {
     private String email;

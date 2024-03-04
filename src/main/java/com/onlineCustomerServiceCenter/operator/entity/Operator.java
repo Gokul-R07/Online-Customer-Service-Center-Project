@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.operator;
+package com.onlineCustomerServiceCenter.operator.entity;
 
 import com.onlineCustomerServiceCenter.issue.Issue;
 import jakarta.persistence.Entity;

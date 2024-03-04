@@ -1,18 +1,23 @@
-package com.onlineCustomerServiceCenter.admin;
+package com.onlineCustomerServiceCenter.admin.controller;
 
-import com.onlineCustomerServiceCenter.operator.Operator;
+import com.onlineCustomerServiceCenter.admin.model.Admin;
+import com.onlineCustomerServiceCenter.admin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
+
     @Autowired
     private AdminService adminService;
-    @PostMapping("operator")
-    public Operator createOperator(@RequestBody Operator newOperator){
-       return this.adminService.createOperator(newOperator);
+
+    @PostMapping("/registerAdmin")
+    public Admin registerAdmin(@RequestBody Admin newAdmin) {
+        return adminService.registerAdmin(newAdmin);
     }
 
+    @PostMapping("/loginAdmin")
+    public Admin loginAdmin(@RequestBody Admin adminCredentials) {
+        return adminService.loginAdmin(adminCredentials.getEmail(), adminCredentials.getPassword());
+    }
 }
