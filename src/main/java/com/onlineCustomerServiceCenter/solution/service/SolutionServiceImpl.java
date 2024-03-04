@@ -16,13 +16,11 @@ public class SolutionServiceImpl implements SolutionService {
     @Autowired
     private SolutionRepository solutionRepository;
 
-
-
     @Override
     public Solution createSolution(String solutionDescription) throws SolutionException {
         if(solutionDescription==null ){
             throw new SolutionException("Solution Description cannot be empty");
-        } else if (solutionDescription.isBlank()==true) {
+        } else if (solutionDescription.isBlank()) {
             throw new SolutionException("Solution Description cannot be blank");
         }
         Solution solution=new Solution(solutionDescription);
