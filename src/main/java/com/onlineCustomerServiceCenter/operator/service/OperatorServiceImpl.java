@@ -1,13 +1,12 @@
 package com.onlineCustomerServiceCenter.operator.service;
 
-import com.onlineCustomerServiceCenter.issue.Issue;
-import com.onlineCustomerServiceCenter.issue.IssueRepository;
-import com.onlineCustomerServiceCenter.issue.IssueService;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRespository;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;

@@ -1,5 +1,6 @@
-package com.onlineCustomerServiceCenter.issue;
+package com.onlineCustomerServiceCenter.issue.service;
 
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;

@@ -7,7 +7,6 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginExceptio
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerUpdateException;
 import com.onlineCustomerServiceCenter.customer.service.CustomerService;
-import com.onlineCustomerServiceCenter.issue.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;

@@ -1,7 +1,10 @@
-package com.onlineCustomerServiceCenter.issue;
+package com.onlineCustomerServiceCenter.issue.service;
 
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
+import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IssueServiceImpl implements IssueService{
+public class IssueServiceImpl implements IssueService {
     @Autowired
     private IssueRepository issueRepository;
     @Override

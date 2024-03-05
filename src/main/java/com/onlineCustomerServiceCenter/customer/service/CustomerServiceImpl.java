@@ -6,10 +6,12 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerUpdateExcepti
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
-import com.onlineCustomerServiceCenter.issue.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,5 +69,21 @@ public class CustomerServiceImpl implements CustomerService {
             this.customerRepository.deleteById(customerId);
             Customer customerToBeDeleted= customerOpt.get();
             return  customerToBeDeleted;
+    }
+
+    @Override
+    public Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerRegisterException {
+        Customer customer;
+        Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
+        if(optCustomer.isPresent()){
+             customer = optCustomer.get();
+            customer.setIssues((List<Issue>) newIssue);
+            this.customerRepository.save(customer);
+        }
+        else{
+            throw new CustomerRegisterException("No user found with the customerId");
+        }
+
+        return customer;
     }
 }

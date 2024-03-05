@@ -5,6 +5,8 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerUpdateExcepti
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -16,4 +18,5 @@ public interface CustomerService {
     Customer getCustomerById(Integer customerId);
     Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException;
 
+    Customer addIssueToCustomer(Integer customerId,  Issue newIssue) throws CustomerRegisterException;
 }

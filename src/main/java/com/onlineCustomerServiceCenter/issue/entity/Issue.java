@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.issue;
+package com.onlineCustomerServiceCenter.issue.entity;
 
 
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
