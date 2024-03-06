@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class OperatorController {
     @Autowired
     private OperatorService operatorService;
-    @GetMapping("operator")
-    public String loginOperator( @RequestParam OperatorLoginDto operatorLoginDto){
+    @PostMapping("operator/login")
+    public String loginOperator(@RequestBody OperatorLoginDto operatorLoginDto){
         try {
             return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
         } catch (OperatorNotFoundException e) {
@@ -33,7 +33,7 @@ public class OperatorController {
     @PatchMapping("operator")
     public String changePassword(@RequestBody PasswordDto passwordDto){
             try {
-                return this.operatorService.changePassword(passwordDto.getOperatorId(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
+                return this.operatorService.changePassword(passwordDto.getEmail(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
 
             } catch (OperatorNotFoundException e) {
                 throw new RuntimeException(e);

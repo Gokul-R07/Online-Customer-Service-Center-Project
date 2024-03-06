@@ -14,9 +14,10 @@ public class operatorTests {
     @Autowired
     private OperatorService operatorService;
     @Test
-    void loginOperator() {
+
+    void loginOperatorPositiveTest() {
         try {
-            Assertions.assertEquals("Login Success",this.operatorService.loginOperator("g@gmail.com","gokul123"));
+            Assertions.assertEquals("Login successful",this.operatorService.loginOperator("g@gmail.com","hh321@GG"));
         } catch (OperatorNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IncorrectPasswordException e) {
@@ -25,4 +26,32 @@ public class operatorTests {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    void loginOperatorWithIncorrectPassword() {
+        Assertions.assertThrows(IncorrectPasswordException.class, () -> {
+            this.operatorService.loginOperator("g@gmail.com", "h321@GG");
+        });
+    }
+    @Test
+    void loginOperatorWithIncorrectEmail() {
+        Assertions.assertThrows(OperatorNotFoundException.class, () -> {
+            this.operatorService.loginOperator("a@gmail.com", "hh321@GG");
+        });
+    }
+
+//    @Test
+//    void changePasswordPositiveTest(){
+//        try {
+//            this.operatorService.changePassword("g@gmail.com","hh321@GG","a8Good@");
+//        } catch (OperatorNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (IncorrectPasswordException e) {
+//            throw new RuntimeException(e);
+//        } catch (NullException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+
 }

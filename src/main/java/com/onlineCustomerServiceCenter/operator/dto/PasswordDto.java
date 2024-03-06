@@ -8,17 +8,10 @@ import lombok.Setter;
 
 public class PasswordDto {
 
-    Integer operatorId;
+    String email;
     String oldPassword;
     String newPassword;
 
-    public PasswordDto(Integer operatorId, String oldPassword, String newPassword) {
-        this.operatorId = operatorId;
-        this.oldPassword = oldPassword;
-        this.newPassword = newPassword;
-    }
 
-    public PasswordDto() {
-    }
 
 }

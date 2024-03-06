@@ -10,7 +10,7 @@ import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 public interface OperatorService {
     String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException;
 
-    String changePassword(Integer operatorId, String oldPassword,String newPassword) throws  OperatorNotFoundException, IncorrectPasswordException, NullException;
+    String changePassword(String email, String oldPassword,String newPassword) throws  OperatorNotFoundException, IncorrectPasswordException, NullException;
 
 
 
