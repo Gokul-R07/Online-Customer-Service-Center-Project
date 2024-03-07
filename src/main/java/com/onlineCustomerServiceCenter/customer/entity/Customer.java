@@ -1,6 +1,8 @@
 package com.onlineCustomerServiceCenter.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.onlineCustomerServiceCenter.issue.Issue;
+import jakarta.persistence.*;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,16 +18,14 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-//@Builder
+@AllArgsConstructor
 public class Customer {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer customerId;
     @NotNull(message = "customer name cannot be null")
     @NotBlank(message = "customer name cannot be blank ")
@@ -33,22 +33,28 @@ public class Customer {
 
     @NotNull(message = "customer email cannot be null")
     @NotBlank(message = "customer email cannot be blank")
-    @Email
+    @Email(message="email is not in correct format, Eg. ford@gmail.com")
     private String email;
     @NotNull(message = "customer password cannot be null")
     @NotBlank(message = "customer password cannot be blank")
-    @Pattern(regexp = "[A-Za-z\\d@$!%*?&]{8}$")
+    @Pattern(regexp = "[A-Za-z\\d@$!%*?&]{8}$", message="password should contain 8 characters")
     private String password;
     @NotNull(message = "customer city cannot be null")
     @NotBlank(message = "customer city cannot be null")
     private String city;
     @NotNull(message = "customer phoneNumber cannot be null")
     @NotBlank(message = "customer name cannot be null")
-    @Pattern(regexp = "^\\d{10}$")
     private String phoneNumber;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Issue> issues = new ArrayList<>();
 
-
+    public Customer(String name, String email, String password, String city, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
 }
+
