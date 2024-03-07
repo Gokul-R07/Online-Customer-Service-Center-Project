@@ -65,9 +65,30 @@ public class OperatorController {
         return operatorService.getAllPendingIssueByOperatorId(operatorid);
     }
 
-    @GetMapping("Allocated-issue-by-id")
+    @GetMapping("/Allocated-issue-by-id")
     public List<Issue> getAllAllocatedIssueById(@RequestBody Integer operatorid){
         return operatorService.getAllAllocatedIssuByOperatorId(operatorid);
     }
+
+    @GetMapping("/Allocated-issue")
+    public List<Issue> getAllAllocatedIssue(){
+        return this.operatorService.getAllAllocatedIssue();
+    }
+
+    @GetMapping("/Allocated-issue-count")
+    public Long getAllAllocatedIssueCount(){
+        return this.operatorService.getAllAllocatedIssueCount();
+    }
+
+    @GetMapping("/Pending-issue")
+    public List<Issue> getAllPendingIssue(){
+        return this.operatorService.getAllPendingIssue();
+    }
+
+    @GetMapping("/Pending-issue-count")
+    public Long getAllPendingIssueCount(){
+        return this.operatorService.getAllPendingIssueCount();
+    }
+
 
 }

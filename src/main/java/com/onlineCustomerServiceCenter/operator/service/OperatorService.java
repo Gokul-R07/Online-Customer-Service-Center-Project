@@ -20,11 +20,15 @@ public interface OperatorService {
 
     String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException;
 
-    Issue getAllAllocatedIssue();
+    List<Issue> getAllAllocatedIssue();
 
     Long getAllAllocatedIssueCount();
 
     List<Issue> getAllPendingIssueByOperatorId(Integer operatorid);
 
     List<Issue> getAllAllocatedIssuByOperatorId(Integer operatorid);
+
+    List<Issue> getAllPendingIssue();
+
+    Long getAllPendingIssueCount();
 }
