@@ -4,9 +4,14 @@ import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.issue.IssueRepository;
+import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
+import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +79,8 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customerToBeDeleted= customerOpt.get();
         return  customerToBeDeleted;
     }
+
+
 }
 
 

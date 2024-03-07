@@ -4,7 +4,6 @@ import com.onlineCustomerServiceCenter.customer.dto.CustomerLoginDto;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.service.CustomerService;
-import com.onlineCustomerServiceCenter.issue.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;

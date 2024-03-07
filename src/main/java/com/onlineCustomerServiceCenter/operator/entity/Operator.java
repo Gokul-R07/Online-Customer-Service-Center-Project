@@ -1,6 +1,6 @@
 package com.onlineCustomerServiceCenter.operator.entity;
 
-import com.onlineCustomerServiceCenter.issue.Issue;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

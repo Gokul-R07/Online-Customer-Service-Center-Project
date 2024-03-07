@@ -1,17 +1,15 @@
-package com.onlineCustomerServiceCenter.admin;
+package com.onlineCustomerServiceCenter.admin.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-
 public class Admin {
     @Id
     @GeneratedValue()
     private Integer adminId;
     private String firstName;
-
     private String lastName;
     private String email;
     private String password;
@@ -19,8 +17,7 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(Integer adminId, String firstName, String lastName, String email, String password) {
-        this.adminId = adminId;
+    public Admin(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
