@@ -2,15 +2,13 @@ package com.onlineCustomerServiceCenter.customer.controller;
 
 import com.onlineCustomerServiceCenter.customer.dto.CustomerLoginDto;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerUpdateException;
+import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.service.CustomerService;
 import com.onlineCustomerServiceCenter.issue.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,7 +21,7 @@ public class CustomerController {
 
 
     @PostMapping("customer")
-    public Customer registerCustomer(@RequestBody Customer newCustomer) throws CustomerRegisterException {
+    public Customer registerCustomer(@Valid  @RequestBody Customer newCustomer) throws CustomerRegisterException {
         return this.customerService.registerCustomer(newCustomer);
     }
 
@@ -38,18 +36,18 @@ public class CustomerController {
     }
 
     @GetMapping("customers")
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() throws CustomerNotFoundException {
         return this.customerService.getAllCustomers();
     }
 
-    @GetMapping("customer/{id}")
-    public Customer getCustomerById(@PathVariable("id") Integer id) {
-        return this.customerService.getCustomerById(id);
+    @GetMapping("customer/{email}")
+    public Customer getCustomerByEmail(@PathVariable String email) throws CustomerNotFoundException{
+        return this.customerService.getCustomerByEmail(email);
     }
 
     @DeleteMapping("customer/{id}")
-    public Customer deleteCustomerById(@PathVariable("id") Integer id) throws CustomerDeleteException {
-        return this.customerService.deleteCustomerById(id);
+    public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
+        return this.customerService.deleteCustomerByEmail(email);
     }
     @PatchMapping("customer")
     public Solution acceptSolution(@RequestParam Integer solutionId) throws SolutionException{

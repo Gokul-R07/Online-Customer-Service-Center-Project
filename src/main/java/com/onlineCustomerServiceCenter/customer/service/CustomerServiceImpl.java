@@ -1,11 +1,8 @@
 package com.onlineCustomerServiceCenter.customer.service;
 
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
+import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerUpdateException;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
 import com.onlineCustomerServiceCenter.issue.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,7 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-   
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -42,30 +39,44 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public Customer updateCustomer(Customer customer) throws CustomerUpdateException {
-        Optional<Customer> customerOpt = this.customerRepository.findById(customer.getCustomerId());
+        Optional<Customer> customerOpt = this.customerRepository.findByEmail(customer.getEmail());
         if(customerOpt.isEmpty())
             throw new CustomerUpdateException("Customer does not exists for :"+customer.getCustomerId());
+        customer.setCustomerId(customerOpt.get().getCustomerId());
         return this.customerRepository.save(customer);
     }
     @Override
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() throws CustomerNotFoundException {
+        List<Customer> customerOpt=this.customerRepository.findAll();
+        if(customerOpt.isEmpty())
+            throw new CustomerNotFoundException("Customers not exist");
         return this.customerRepository.findAll();
     }
+
     @Override
-    public Customer getCustomerById(Integer customerId){
-        return this.customerRepository.findById(customerId).get();
-    }
-
-
-   @Override
-   public Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException {
-        Optional<Customer> customerOpt = this.customerRepository.findById(customerId);
+    public Customer getCustomerByEmail(String customerEmail) throws CustomerNotFoundException {
+        Optional<Customer> customerOpt = this.customerRepository.findByEmail(customerEmail);
 
         if (customerOpt.isEmpty()) {
-            throw new CustomerDeleteException("Customer does not exist for ID: " + customerId);
+            throw new CustomerNotFoundException("Customer does not exist for email:: " + customerEmail);
         }
-            this.customerRepository.deleteById(customerId);
-            Customer customerToBeDeleted= customerOpt.get();
-            return  customerToBeDeleted;
+        return  customerOpt.get();
+    }
+
+    @Override
+    public Customer deleteCustomerByEmail(String email) throws CustomerDeleteException {
+        Optional<Customer> customerOpt = this.customerRepository.findByEmail(email);
+
+        if (customerOpt.isEmpty()) {
+            throw new CustomerDeleteException("Customer does not exist for email:: " + email);
+        }
+        this.customerRepository.deleteById(customerOpt.get().getCustomerId());
+        Customer customerToBeDeleted= customerOpt.get();
+        return  customerToBeDeleted;
     }
 }
+
+
+
+
+
