@@ -71,19 +71,5 @@ public class CustomerServiceImpl implements CustomerService {
             return  customerToBeDeleted;
     }
 
-    @Override
-    public Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerRegisterException {
-        Customer customer;
-        Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
-        if(optCustomer.isPresent()){
-             customer = optCustomer.get();
-            customer.setIssues((List<Issue>) newIssue);
-            this.customerRepository.save(customer);
-        }
-        else{
-            throw new CustomerRegisterException("No user found with the customerId");
-        }
 
-        return customer;
-    }
 }

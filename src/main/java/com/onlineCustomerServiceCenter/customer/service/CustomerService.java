@@ -18,5 +18,5 @@ public interface CustomerService {
     Customer getCustomerById(Integer customerId);
     Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException;
 
-    Customer addIssueToCustomer(Integer customerId,  Issue newIssue) throws CustomerRegisterException;
+
 }
