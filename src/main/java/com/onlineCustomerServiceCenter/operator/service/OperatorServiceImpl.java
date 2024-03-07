@@ -15,6 +15,9 @@ import com.onlineCustomerServiceCenter.solution.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -106,6 +109,43 @@ public class OperatorServiceImpl implements OperatorService {
          }
 
 
+    }
+
+  
+
+    @Override
+    public List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) {
+        Optional<Operator> operatorIdOptional= this.operatorRepository.findById(operatorid);
+        List<Issue> pendIssues = new ArrayList<>();
+        if(operatorIdOptional.isEmpty()) {
+            return Collections.emptyList();
+
+    }
+    else{
+        for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
+            if(issue.getIssueStatus().equals("pending")){
+                pendIssues.add(issue);
+            }
+            return pendIssues;
+        }
+    
+    }
+
+    @Override
+    public List<Issue> getAllAllocatedIssuByOperatorId(Integer operatorid) {
+        Optional<Operator> operator = this.operatorRepository.findById(operatorid);
+        List<Issue> allocatedIssue = new ArrayList<>();
+        if(operator.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            for(Issue issue : operator.get().getCustomerIssues()){
+                if(issue.getIssueStatus().equals("pending")){
+                    allocatedIssue.add(issue);
+                }
+            }
+        }
+        return allocatedIssue;
     }
 
 }

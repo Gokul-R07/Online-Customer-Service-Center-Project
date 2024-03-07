@@ -1,5 +1,6 @@
 package com.onlineCustomerServiceCenter.operator.controller;
 
+import com.onlineCustomerServiceCenter.issue.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.operator.dto.PasswordDto;
@@ -11,6 +12,9 @@ import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.operator.dto.IssueSolutionDto;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +57,17 @@ public class OperatorController {
         } catch (NullException e) {
             throw new RuntimeException(e);
         }
+    }
+
+   
+    @GetMapping("/pending-issue-by-id")
+    public List<Issue> getAllPendingIssue(@RequestBody Integer operatorid){
+        return operatorService.getAllPendingIssueByOperatorId(operatorid);
+    }
+
+    @GetMapping("Allocated-issue-by-id")
+    public List<Issue> getAllAllocatedIssueById(@RequestBody Integer operatorid){
+        return operatorService.getAllAllocatedIssuByOperatorId(operatorid);
     }
 
 }
