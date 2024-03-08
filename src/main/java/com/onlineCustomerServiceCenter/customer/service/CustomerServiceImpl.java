@@ -54,23 +54,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerByEmail(String customerEmail) throws CustomerNotFoundException {
-        Optional<Customer> customerOpt = this.customerRepository.findByEmail(customerEmail);
+    public Customer getCustomerById(Integer customerId) throws CustomerNotFoundException {
+        Optional<Customer> customerOpt = this.customerRepository.findById(customerId);
 
         if (customerOpt.isEmpty()) {
-            throw new CustomerNotFoundException("Customer does not exist for email:: " + customerEmail);
+            throw new CustomerNotFoundException("Customer does not exist for ID: "+customerId);
         }
         return  customerOpt.get();
     }
 
     @Override
-    public Customer deleteCustomerByEmail(String email) throws CustomerDeleteException {
-        Optional<Customer> customerOpt = this.customerRepository.findByEmail(email);
+    public Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException {
+        Optional<Customer> customerOpt = this.customerRepository.findById(customerId);
 
         if (customerOpt.isEmpty()) {
-            throw new CustomerDeleteException("Customer does not exist for email:: " + email);
+            throw new CustomerDeleteException("Customer does not exist for email:: " + (customerOpt.get()).getEmail());
         }
-        this.customerRepository.deleteById(customerOpt.get().getCustomerId());
+        this.customerRepository.deleteById(customerId);
         Customer customerToBeDeleted= customerOpt.get();
         return  customerToBeDeleted;
     }
