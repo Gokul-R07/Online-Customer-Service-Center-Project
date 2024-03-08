@@ -67,7 +67,7 @@ public class OperatorController {
 
     @GetMapping("/Allocated-issue-by-id")
     public List<Issue> getAllAllocatedIssueById(@RequestBody Integer operatorid){
-        return operatorService.getAllAllocatedIssuByOperatorId(operatorid);
+        return operatorService.getAllAllocatedIssueByOperatorId(operatorid);
     }
 
     @GetMapping("/Allocated-issue")

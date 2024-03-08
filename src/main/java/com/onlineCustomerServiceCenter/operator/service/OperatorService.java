@@ -26,7 +26,7 @@ public interface OperatorService {
 
     List<Issue> getAllPendingIssueByOperatorId(Integer operatorid);
 
-    List<Issue> getAllAllocatedIssuByOperatorId(Integer operatorid);
+    List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid);
 
     List<Issue> getAllPendingIssue();
 

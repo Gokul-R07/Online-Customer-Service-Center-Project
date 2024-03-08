@@ -152,7 +152,7 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public List<Issue> getAllAllocatedIssuByOperatorId(Integer operatorid){
+    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid){
         Optional<Operator> operator = this.operatorRepository.findById(operatorid);
         List<Issue> allocatedIssue = new ArrayList<>();
         if(operator.isEmpty()){
