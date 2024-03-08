@@ -33,19 +33,18 @@ public class IssueController {
     private IssueService issueService
 ;
 
-    @PostMapping("issue")
-    public Customer addIssueToCustomer(@RequestBody Integer customerId,@RequestBody Issue newIssue ) throws CustomerRegisterException {
+    @PostMapping("issue/{customerId}")
+    public Customer addIssueToCustomer(@RequestParam Integer customerId,@RequestBody Issue newIssue ) throws CustomerRegisterException {
         return this.issueService.addIssueToCustomer(customerId, newIssue);
     }
 
-    @PatchMapping("issue/update/{customerId}, {issueId}")
+    @PatchMapping("issue/update/{customerId}/{issueId}")
     public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody String newDesc) throws IssueNotFoundException, CustomerRegisterException{
-
-        return this.issueService.updtaeIssueDescById(customerId, issueId, newDesc);
+        return this.issueService.updateIssueDescById(customerId, issueId, newDesc);
 
     }
 
-    @PutMapping("issue/delete/{customerId},{issueId}")
+    @PutMapping("issue/delete/{customerId}/{issueId}")
     public void deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
         this.issueService.deleteIssueById(issueId);
 
@@ -53,3 +52,7 @@ public class IssueController {
 
 
 }
+
+
+
+

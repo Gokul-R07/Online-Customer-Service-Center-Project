@@ -44,7 +44,7 @@ public class CustomerController {
         return this.customerService.getCustomerByEmail(email);
     }
 
-    @DeleteMapping("customer/{id}")
+    @DeleteMapping("customer/{email}")
     public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
         return this.customerService.deleteCustomerByEmail(email);
     }

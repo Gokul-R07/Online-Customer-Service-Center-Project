@@ -21,7 +21,7 @@ public interface IssueService {
 
     public String addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException;
 
-    Customer updtaeIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException;
+    Customer updateIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException;
 
     Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerRegisterException;
 }
