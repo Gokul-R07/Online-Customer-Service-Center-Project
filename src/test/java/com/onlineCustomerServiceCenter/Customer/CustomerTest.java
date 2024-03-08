@@ -1,6 +1,4 @@
 package com.onlineCustomerServiceCenter.Customer;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.*;

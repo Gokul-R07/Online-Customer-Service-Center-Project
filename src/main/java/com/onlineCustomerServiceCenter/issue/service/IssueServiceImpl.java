@@ -70,7 +70,6 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public List<Issue> getAllIssuesByType(String type) {
 
-        //return this.issueRepository.findAllByType(type);
         return null;
     }
 
@@ -87,7 +86,7 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Customer updtaeIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException {
+    public Customer updateIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException {
         Optional<Issue> optIssue = issueRepository.findById(issueId);
         if(optIssue.isPresent()){
             Optional<Customer> optCustomer = customerRepository.findById(customerId);
@@ -116,14 +115,16 @@ public class IssueServiceImpl implements IssueService {
         Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
         if(optCustomer.isPresent()){
             customer = optCustomer.get();
-            customer.setIssues((List<Issue>) newIssue);
-            this.customerRepository.save(customer);
+            List<Issue> issuelist=customer.getIssues();
+            issuelist.add(newIssue);
+            customer.setIssues(issuelist);
             this.issueRepository.save(newIssue);
+            this.customerRepository.save(customer);
+
         }
         else{
             throw new CustomerRegisterException("No user found with the customerId");
         }
-
         return customer;
     }
 }

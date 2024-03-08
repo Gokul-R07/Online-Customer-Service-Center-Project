@@ -1,7 +1,6 @@
 package com.onlineCustomerServiceCenter.customer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.onlineCustomerServiceCenter.issue.Issue;
 import jakarta.persistence.*;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import jakarta.persistence.Entity;
