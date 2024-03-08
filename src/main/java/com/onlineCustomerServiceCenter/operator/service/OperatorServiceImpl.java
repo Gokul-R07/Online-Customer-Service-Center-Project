@@ -50,14 +50,14 @@ public class OperatorServiceImpl implements OperatorService {
                 throw new IncorrectPasswordException("Incorrect password");
             }
         } else {
-            throw new OperatorNotFoundException("Operator not found");
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
         }
     }
 
     @Override
     public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         if(email==null){
-            throw new NullException("Operator Id cannot be null");
+            throw new NullException("Operator Email cannot be null");
         }
 
         else if (oldPassword==null) {
@@ -77,7 +77,7 @@ public class OperatorServiceImpl implements OperatorService {
             return "Password changed successfully";
         }
         else{
-            throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
         }
 
     }
