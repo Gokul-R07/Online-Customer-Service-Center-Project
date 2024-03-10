@@ -7,11 +7,15 @@ import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 
 public interface OperatorService {
 
-    Operator updateOperatorProfile(Operator updatedoperator);
+    static Operator updateOperatorProfile(Operator updatedoperator) {
+        return null;
+    }
 
-    String loginOperator(String email, String password);
+    static String loginOperator(String email, String password);
 
     Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException;
 
-    boolean deleteOperator(Integer optId);
+    static boolean deleteOperator(Integer optId) {
+        return false;
+    }
 }

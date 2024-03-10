@@ -17,9 +17,10 @@ public class AdminServiceImpl implements AdminService {
     public Admin adminLogin(AdminLoginDto adminLoginDto) {
         // Simulated logic to validate admin login
         for (Admin admin : adminList) {
-            if (admin.getEmail().equals(adminLoginDto.getEmail()) && admin.getPassword().equals(adminLoginDto.getPassword())) {
-                return admin; // Return the logged-in admin
-            }
+            if (admin.getPassword().equals(adminLoginDto.getPassword()))
+                if (admin.getEmail().equals(adminLoginDto.getEmail())) {
+                    return admin; // Return the logged-in admin
+                }
         }
         return null; // Return null if login credentials are invalid
     }

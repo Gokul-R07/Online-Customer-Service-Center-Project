@@ -30,7 +30,7 @@ public class Admin {
     @NotBlank
     private String password;
 
-    public Admin() {
+    public Admin(String firstName, String lastName, String email, String password) {
     }
 
     // Getters and setters
@@ -62,5 +62,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Object getEmail() {
+        return email;
+    }
+
+    public Object getPassword() {
+        return password;
     }
 }

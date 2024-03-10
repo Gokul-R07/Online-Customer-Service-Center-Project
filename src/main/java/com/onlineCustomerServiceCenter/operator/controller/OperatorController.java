@@ -33,4 +33,11 @@ public class OperatorController {
         }
     }
 
+    public Object loginOperator(String email, String password) {
+        try {
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
