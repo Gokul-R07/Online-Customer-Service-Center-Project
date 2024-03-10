@@ -40,16 +40,22 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue deleteIssueById(Integer id) throws IssueNotFoundException {
-
+    public Customer deleteIssueById(Integer customerId,Integer id) throws IssueNotFoundException {
+        Optional<Customer> customerid=this.customerRepository.findById(customerId);
         Optional<Issue> optionalIssue = this.issueRepository.findById(id);
         if(optionalIssue.isEmpty()){
             throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+id);
         }
+        if(customerid.isEmpty()){
+            throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+id);
+        }
+        Customer customer=customerid.get();
+        Issue issue=optionalIssue.get();
+        List<Issue>issueList=customer.getIssues();
+        issueList.remove(issue);
+        this.issueRepository.deleteById(issue.getIssueId());
+        return this.customerRepository.save(customer);
 
-        Issue issue = optionalIssue.get();
-        this.issueRepository.delete(issue);
-        return issue;
     }
 
 
@@ -86,18 +92,16 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Customer updateIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException {
+    public Customer updateIssueDescById(Integer customerId, Integer issueId, Issue issue) throws CustomerRegisterException, IssueNotFoundException {
+        Customer customer;
         Optional<Issue> optIssue = issueRepository.findById(issueId);
+        Optional<Customer> optCustomer = customerRepository.findById(customerId);
         if(optIssue.isPresent()){
-            Optional<Customer> optCustomer = customerRepository.findById(customerId);
-            Issue issue = optIssue.get();
             if(optCustomer.isPresent()){
 
-                Customer customer = optCustomer.get();
-                issue.setIssueDescription(newDesc);
-                customer.setIssues((List<Issue>) issue);
-                customerRepository.save(customer);
-                return customer;
+                 customer = optCustomer.get();
+                 issue.setIssueId(issueId);
+                this.issueRepository.save(issue);
 
             }
             else{
@@ -107,6 +111,7 @@ public class IssueServiceImpl implements IssueService {
         else{
             throw new IssueNotFoundException("Issue not found");
         }
+        return customer;
     }
 
     @Override
@@ -115,12 +120,9 @@ public class IssueServiceImpl implements IssueService {
         Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
         if(optCustomer.isPresent()){
             customer = optCustomer.get();
-            List<Issue> issuelist=customer.getIssues();
-            issuelist.add(newIssue);
-            customer.setIssues(issuelist);
+            customer.getIssues().add(newIssue);
             this.issueRepository.save(newIssue);
             this.customerRepository.save(customer);
-
         }
         else{
             throw new CustomerRegisterException("No user found with the customerId");

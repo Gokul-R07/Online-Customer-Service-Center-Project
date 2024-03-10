@@ -32,7 +32,6 @@ public class Issue {
     private LocalDate issueCreationDate;
     private LocalDate issueUpdatedDate;
     private Boolean ticketClose = false;
-
     private String issueStatus;
 
     @Size(min = 10, max = 50, message = "The Issue Description must be between 10 and 50 characters")

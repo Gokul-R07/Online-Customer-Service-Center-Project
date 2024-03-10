@@ -20,14 +20,18 @@ public interface OperatorService {
     String changePassword(String email, String oldPassword,String newPassword) throws  OperatorNotFoundException, IncorrectPasswordException, NullException;
 
 
-
     String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException;
 
-    Issue getAllAllocatedIssue();
+    List<Issue> getAllAllocatedIssue();
 
     Long getAllAllocatedIssueCount();
 
     List<Issue> getAllPendingIssueByOperatorId(Integer operatorid);
 
     List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid);
+
+    List<Issue> getAllPendingIssue();
+
+    Long getAllPendingIssueCount();
+
 }

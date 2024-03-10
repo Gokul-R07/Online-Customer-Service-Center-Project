@@ -13,7 +13,7 @@ public interface IssueService {
     public Issue addIssue(Issue issue) throws NullIssueException;
     public Issue updateIssueDescById(Issue issue, String newDesc) throws NullIssueException;
 
-    public Issue deleteIssueById(Integer id) throws IssueNotFoundException;
+    public Customer deleteIssueById(Integer customerId,Integer id) throws IssueNotFoundException;
     public Issue getIssueById(Integer id) throws IssueNotFoundException;
     public List<Issue> getAllIssues();
 
@@ -21,7 +21,7 @@ public interface IssueService {
 
     public String addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException;
 
-    Customer updateIssueDescById(Integer customerId, Integer issueId, String newDesc) throws CustomerRegisterException, IssueNotFoundException;
+    Customer updateIssueDescById(Integer customerId, Integer issueId, Issue issue) throws CustomerRegisterException, IssueNotFoundException;
 
     Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerRegisterException;
 }

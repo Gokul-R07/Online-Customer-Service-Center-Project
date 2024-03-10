@@ -15,6 +15,7 @@ import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
 
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
+@Slf4j
 public class OperatorServiceImpl implements OperatorService {
 
     @Autowired
@@ -111,13 +114,21 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public Issue getAllAllocatedIssue() {
-        return null;
+    public List<Issue> getAllAllocatedIssue() {
+        List<Issue> issues = this.issueRepository.findAll();
+        if(issues.isEmpty()){
+            log.info("There are no issues allocated");
+        }
+        return this.issueRepository.findAll();
     }
 
     @Override
     public Long getAllAllocatedIssueCount() {
-        return null;
+        List<Issue> issues = this.issueRepository.findAll();
+        if(issues.isEmpty()){
+            log.info("There are no issues allocated");
+        }
+        return this.issueRepository.count();
     }
 
 
@@ -140,8 +151,50 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid) {
-        return null;
+    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid){
+        Optional<Operator> operator = this.operatorRepository.findById(operatorid);
+        List<Issue> allocatedIssue = new ArrayList<>();
+        if(operator.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            for(Issue issue : operator.get().getCustomerIssues()){
+                if(issue.getIssueStatus().equals("pending")){
+                    allocatedIssue.add(issue);
+                }
+            }
+        }
+        return allocatedIssue;
+    }
+
+    @Override
+    public List<Issue> getAllPendingIssue() {
+        List<Issue> issues = this.issueRepository.findAll();
+        List<Issue> pendingIssue = new ArrayList<>();
+
+        for(Issue issue : issues){
+            if(issue.getIssueStatus().equals("pending")){
+                pendingIssue.add(issue);
+            }
+        }
+        if(pendingIssue.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            return pendingIssue;
+        }
+    }
+
+    @Override
+    public Long getAllPendingIssueCount() {
+        List<Issue> issueCounter = getAllPendingIssue();
+        if(issueCounter.isEmpty()){
+            return 0L;
+        }
+        else{
+            return issueCounter.stream().count();
+        }
     }
 
 }
+

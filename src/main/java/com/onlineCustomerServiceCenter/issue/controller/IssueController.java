@@ -38,15 +38,15 @@ public class IssueController {
         return this.issueService.addIssueToCustomer(customerId, newIssue);
     }
 
-    @PatchMapping("issue/update/{customerId}/{issueId}")
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody String newDesc) throws IssueNotFoundException, CustomerRegisterException{
-        return this.issueService.updateIssueDescById(customerId, issueId, newDesc);
+    @PutMapping("issue/update/{customerId}/{issueId}")
+    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException{
+        return this.issueService.updateIssueDescById(customerId, issueId, issue);
 
     }
 
-    @PutMapping("issue/delete/{customerId}/{issueId}")
-    public void deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
-        this.issueService.deleteIssueById(issueId);
+    @DeleteMapping("issue/delete/{customerId}/{issueId}")
+    public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
+       return this.issueService.deleteIssueById(customerId,issueId);
 
     }
 
