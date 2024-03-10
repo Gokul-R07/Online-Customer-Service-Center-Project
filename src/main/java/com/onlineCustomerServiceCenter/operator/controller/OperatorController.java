@@ -2,10 +2,10 @@ package com.onlineCustomerServiceCenter.operator.controller;
 
 import com.onlineCustomerServiceCenter.issue.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
-import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.operator.dto.IssueSolutionDto;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

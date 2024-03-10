@@ -12,4 +12,6 @@ public interface OperatorService {
     String loginOperator(String email, String password);
 
     Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException;
+
+    boolean deleteOperator(Integer optId);
 }

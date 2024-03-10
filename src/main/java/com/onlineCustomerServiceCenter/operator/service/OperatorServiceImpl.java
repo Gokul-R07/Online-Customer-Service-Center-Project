@@ -7,7 +7,6 @@ import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRespository;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
