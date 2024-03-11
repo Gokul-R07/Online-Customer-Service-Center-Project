@@ -13,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class operatorTests {
     @Autowired
     private OperatorService operatorService;
-    @Test
 
+    @Test
     void loginOperatorPositiveTest() {
         try {
-            Assertions.assertEquals("Login successful",this.operatorService.loginOperator("g@gmail.com","hh321@GG"));
+            Assertions.assertEquals("Login successful", this.operatorService.loginOperator("g@gmail.com", "gG123@ee"));
         } catch (OperatorNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IncorrectPasswordException e) {
@@ -33,6 +33,7 @@ public class operatorTests {
             this.operatorService.loginOperator("g@gmail.com", "h321@GG");
         });
     }
+
     @Test
     void loginOperatorWithIncorrectEmail() {
         Assertions.assertThrows(OperatorNotFoundException.class, () -> {
@@ -40,18 +41,28 @@ public class operatorTests {
         });
     }
 
-//    @Test
-//    void changePasswordPositiveTest(){
-//        try {
-//            this.operatorService.changePassword("g@gmail.com","hh321@GG","a8Good@");
-//        } catch (OperatorNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IncorrectPasswordException e) {
-//            throw new RuntimeException(e);
-//        } catch (NullException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-
+    @Test
+    public void changePasswordPositiveTest() {
+        try {
+            Assertions.assertEquals("Password changed successfully",this.operatorService.changePassword("g@gmail.com","htw31234","arc12341"));
+        } catch (OperatorNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IncorrectPasswordException e) {
+            throw new RuntimeException(e);
+        } catch (NullException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    public void changePasswordWithIncorrectOldPassword() {
+        Assertions.assertThrows(IncorrectPasswordException.class, () -> {
+            this.operatorService.changePassword("g@gmail.com","ac12341","gokul12341");
+        });
+    }
+    @Test
+    public void changePasswordWithIncorrectEmailId() {
+        Assertions.assertThrows(OperatorNotFoundException.class, () -> {
+            this.operatorService.changePassword("g1@gmail.com","arc12341","gokul12341");
+        });
+    }
 }
