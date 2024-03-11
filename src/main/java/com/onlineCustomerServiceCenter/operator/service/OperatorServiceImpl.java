@@ -1,8 +1,8 @@
 package com.onlineCustomerServiceCenter.operator.service;
 
-import com.onlineCustomerServiceCenter.issue.Issue;
-import com.onlineCustomerServiceCenter.issue.IssueRepository;
-import com.onlineCustomerServiceCenter.issue.IssueService;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
@@ -117,18 +117,19 @@ public class OperatorServiceImpl implements OperatorService {
     public List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) {
         Optional<Operator> operatorIdOptional= this.operatorRepository.findById(operatorid);
         List<Issue> pendIssues = new ArrayList<>();
-        if(operatorIdOptional.isEmpty()) {
+        if (operatorIdOptional.isEmpty()) {
             return Collections.emptyList();
 
-    }
-    else{
-        for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
-            if(issue.getIssueStatus().equals("pending")){
-                pendIssues.add(issue);
+        } else {
+            for (Issue issue : operatorIdOptional.get().getCustomerIssues()) {
+                if (issue.getIssueStatus().equals("pending")) {
+                    pendIssues.add(issue);
+                }
+                return pendIssues;
             }
-            return pendIssues;
+
         }
-    
+        return pendIssues;
     }
 
     @Override

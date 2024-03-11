@@ -4,7 +4,9 @@ import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 
 import java.util.List;
 
-import com.onlineCustomerServiceCenter.issue.Issue;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;

@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.issue;
+package com.onlineCustomerServiceCenter.issue.entity;
 
 
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Size;
 
+//import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+//@Data
 @Entity
 public class Issue {
 
@@ -19,8 +21,10 @@ public class Issue {
     @GeneratedValue()
     private Integer issueId;
     private String issueType;
-    private LocalDate IssueCreationDate;
-    private LocalDate IssueUpdatedDate;
+    private LocalDate issueCreationDate;
+    private LocalDate issueUpdatedDate;
+
+    private Boolean ticketClose;
 
     private String issueStatus;
 
@@ -33,14 +37,14 @@ public class Issue {
     public Issue() {
     }
 
-    public Issue(Integer issueId, String issueType, LocalDate issueCreationDate, LocalDate issueUpdatedDate, String issueStatus, String issueDescription, List<Solution> solutions) {
-        this.issueId = issueId;
+    public Issue(String issueType, String issueDescription) {
         this.issueType = issueType;
-        IssueCreationDate = issueCreationDate;
-        IssueUpdatedDate = issueUpdatedDate;
-        this.issueStatus = issueStatus;
+        this.issueCreationDate = LocalDate.now();
+        this.issueUpdatedDate = null;
+        this.issueStatus = "Unsolved";
         this.issueDescription = issueDescription;
-        this.solutions = solutions;
+        this.ticketClose = false;
+        this.solutions = null;
     }
 
     public Integer getIssueId() {
@@ -60,19 +64,19 @@ public class Issue {
     }
 
     public LocalDate getIssueCreationDate() {
-        return IssueCreationDate;
+        return issueCreationDate;
     }
 
     public void setIssueCreationDate(LocalDate issueCreationDate) {
-        IssueCreationDate = issueCreationDate;
+        this.issueCreationDate = issueCreationDate;
     }
 
     public LocalDate getIssueUpdatedDate() {
-        return IssueUpdatedDate;
+        return issueUpdatedDate;
     }
 
     public void setIssueUpdatedDate(LocalDate issueUpdatedDate) {
-        IssueUpdatedDate = issueUpdatedDate;
+        this.issueUpdatedDate = issueUpdatedDate;
     }
 
     public String getIssueStatus() {
@@ -104,11 +108,21 @@ public class Issue {
         return "Issue{" +
                 "issueId=" + issueId +
                 ", issueType='" + issueType + '\'' +
-                ", IssueCreationDate=" + IssueCreationDate +
-                ", IssueUpdatedDate=" + IssueUpdatedDate +
+                ", IssueCreationDate=" + issueCreationDate +
+                ", IssueUpdatedDate=" + issueUpdatedDate +
                 ", issueStatus='" + issueStatus + '\'' +
                 ", issueDescription='" + issueDescription + '\'' +
                 ", solutions=" + solutions +
                 '}';
     }
+
+    public Boolean getTicketClose() {
+        return ticketClose;
+    }
+
+    public void setTicketClose(Boolean ticketClose) {
+        this.ticketClose = ticketClose;
+    }
+
+
 }

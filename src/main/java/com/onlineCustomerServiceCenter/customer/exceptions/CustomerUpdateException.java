@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.customer;
+package com.onlineCustomerServiceCenter.customer.exceptions;
 
 public class CustomerUpdateException extends Exception {
     public CustomerUpdateException(String msg) {
