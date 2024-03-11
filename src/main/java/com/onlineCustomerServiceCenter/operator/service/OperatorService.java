@@ -9,9 +9,7 @@ import com.onlineCustomerServiceCenter.issue.entity.Issue;
 
 
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
-import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
-import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
+import com.onlineCustomerServiceCenter.operator.exceptions.*;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 
 public interface OperatorService {
@@ -22,16 +20,16 @@ public interface OperatorService {
 
     String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException;
 
-    List<Issue> getAllAllocatedIssue();
+    List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp;
 
-    Long getAllAllocatedIssueCount();
+    Long getAllAllocatedIssueCount() throws AllocatedIssueExp;
 
-    List<Issue> getAllPendingIssueByOperatorId(Integer operatorid);
+    List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) throws PendingIssueExp;
 
-    List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid);
+    List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid) throws AllocatedIssueExp;
 
-    List<Issue> getAllPendingIssue();
+    List<Issue> getAllPendingIssue() throws PendingIssueExp;
 
-    Long getAllPendingIssueCount();
+    Long getAllPendingIssueCount() throws PendingIssueExp;
 
 }
