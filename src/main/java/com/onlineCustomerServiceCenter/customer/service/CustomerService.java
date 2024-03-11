@@ -4,8 +4,6 @@ import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerDeleteException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerLoginException;
-import com.onlineCustomerServiceCenter.issue.entity.Issue;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
