@@ -36,7 +36,7 @@ public class SolutionServiceImpl implements SolutionService {
         Optional<Solution> foundSolution= this.solutionRepository.findById(solutionId);
         if(foundSolution.isPresent()){
             Solution solution=foundSolution.get();
-            solution.setSolutionAccepted(true);
+            solution.setIsSolutionAccepted(true);
             return this.solutionRepository.save(solution);
         }
         return null;

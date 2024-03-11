@@ -24,6 +24,26 @@ public class IssueServiceImpl implements IssueService {
 
 
 
+    @Override
+    public Customer deleteIssueById(Integer customerId,Integer id) throws IssueNotFoundException {
+        Optional<Customer> customerid=this.customerRepository.findById(customerId);
+        Optional<Issue> optionalIssue = this.issueRepository.findById(id);
+        if(optionalIssue.isEmpty()){
+            throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+id);
+        }
+        if(customerid.isEmpty()){
+            throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+id);
+        }
+        Customer customer=customerid.get();
+        Issue issue=optionalIssue.get();
+        List<Issue>issueList=customer.getIssues();
+        issueList.remove(issue);
+        this.issueRepository.deleteById(issue.getIssueId());
+        return this.customerRepository.save(customer);
+
+    }
+
+
 
     @Override
     public Issue getIssueById(Integer id)throws IssueNotFoundException {
@@ -48,6 +68,7 @@ public class IssueServiceImpl implements IssueService {
 
 
     @Override
+
     public Issue updateIssueDescriptionById(Integer customerId, Integer issueId, String newDesc) throws CustomerNotFoundException, IssueNotFoundException {
 
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
@@ -69,20 +90,48 @@ public class IssueServiceImpl implements IssueService {
         issueRepository.save(issueToUpdate);
         return issueToUpdate;
 
+
+    public Customer updateIssueDescById(Integer customerId, Integer issueId, Issue issue) throws CustomerRegisterException, IssueNotFoundException {
+        Customer customer;
+        Optional<Issue> optIssue = issueRepository.findById(issueId);
+        Optional<Customer> optCustomer = customerRepository.findById(customerId);
+        if(optIssue.isPresent()){
+            if(optCustomer.isPresent()){
+
+                 customer = optCustomer.get();
+                 issue.setIssueId(issueId);
+                this.issueRepository.save(issue);
+
+            }
+            else{
+                throw new CustomerRegisterException("Customer not found");
+            }
+        }
+        else{
+            throw new IssueNotFoundException("Issue not found");
+        }
+        return customer;
+
     }
 
     @Override
     public Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerNotFoundException {
         Customer customer;
+
         Optional<Customer> optionalCustomer = this.customerRepository.findById(customerId);
         if(optionalCustomer.isPresent()){
             customer = optionalCustomer.get();
             List<Issue> issueList=customer.getIssues();
             issueList.add(newIssue);
             customer.setIssues(issueList);
+
+        Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
+        if(optCustomer.isPresent()){
+            customer = optCustomer.get();
+            customer.getIssues().add(newIssue);
+
             this.issueRepository.save(newIssue);
             this.customerRepository.save(customer);
-
         }
         else{
             throw new CustomerNotFoundException("No user found with the customerId");

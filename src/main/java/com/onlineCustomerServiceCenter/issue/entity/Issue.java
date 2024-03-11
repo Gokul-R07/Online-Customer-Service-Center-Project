@@ -24,7 +24,11 @@ public class Issue {
     private LocalDate issueCreationDate;
     private LocalDate issueUpdatedDate;
 
+
     private Boolean ticketClose;
+
+
+    private Boolean ticketClose = false;
 
     private String issueStatus;
 

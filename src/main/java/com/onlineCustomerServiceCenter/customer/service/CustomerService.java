@@ -12,7 +12,7 @@ public interface CustomerService {
     Customer loginCustomer(String customerEmail,String customerPassword) throws CustomerLoginException;
     Customer updateCustomer(Customer customer) throws CustomerUpdateException;
     List<Customer> getAllCustomers() throws CustomerNotFoundException;
-    Customer getCustomerByEmail(String customerEmail) throws CustomerNotFoundException;
-    Customer deleteCustomerByEmail(String email) throws CustomerDeleteException;
+    Customer getCustomerById(Integer customerId) throws CustomerNotFoundException;
+    Customer deleteCustomerById(Integer customerId) throws CustomerDeleteException;
 }
 
