@@ -1,4 +1,3 @@
-package com.onlineCustomerServiceCenter.admin.entity;
 package com.onlineCustomerServiceCenter.admin.adto;
 
 public class AdminRegistrationDto {
