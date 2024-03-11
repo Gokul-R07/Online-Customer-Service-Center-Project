@@ -42,7 +42,6 @@ public class Customer {
     private String city;
     @NotNull(message = "customer phoneNumber cannot be null")
     @NotBlank(message = "customer name cannot be null")
-    @Pattern(regexp = "^\\d{10}$", message="phone number should not be null")
     private String phoneNumber;
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
