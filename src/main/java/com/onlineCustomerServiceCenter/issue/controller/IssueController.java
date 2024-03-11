@@ -40,15 +40,6 @@ public class IssueController {
         return this.issueService.updateIssueDescriptionById(customerId, issueId, newDesc);
 
 
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException{
-        return this.issueService.updateIssueDescById(customerId, issueId, issue);
-
-    }
-
-    @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
-       return this.issueService.deleteIssueById(customerId,issueId);
-
     }
 
     @DeleteMapping("/{customerId}/issues/{issueId}")
