@@ -3,6 +3,7 @@ package com.onlineCustomerServiceCenter.admin.service;
 import com.onlineCustomerServiceCenter.admin.adto.AdminLoginDto;
 import com.onlineCustomerServiceCenter.admin.adto.AdminRegistrationDto;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,5 +33,15 @@ public class AdminServiceImpl implements AdminService {
                 adminRegistrationDto.getEmail(), adminRegistrationDto.getPassword());
         adminList.add(newAdmin); // Add the new admin to the list
         return newAdmin; // Return the registered admin
+    }
+
+    @Override
+    public boolean deleteOperator(int operatorId) {
+        return false;
+    }
+
+    @Override
+    public Operator createOperator(Operator operator) {
+        return null;
     }
 }
