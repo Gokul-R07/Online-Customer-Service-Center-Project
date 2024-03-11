@@ -2,10 +2,12 @@ package com.onlineCustomerServiceCenter.issue.service;
 
 import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
-import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundException;
+import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
+import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,23 @@ public class IssueServiceImpl implements IssueService {
     CustomerRepository customerRepository;
     @Autowired
     private IssueRepository issueRepository;
+    @Override
+    public Issue addIssue(Issue issue) throws NullIssueException {
+        if(issue == null){
+            throw new NullIssueException("Can't create null object");
+        }
+       return this.issueRepository.save(issue);
 
+    }
 
-
+    @Override
+    public Issue updateIssueDescById(Issue issue, String newDesc) throws NullIssueException{
+        if(issue == null){
+            throw new NullIssueException("Can't create null object");
+        }
+        issue.setIssueDescription(newDesc);
+        return issue;
+    }
 
     @Override
     public Customer deleteIssueById(Integer customerId,Integer id) throws IssueNotFoundException {
@@ -41,7 +57,6 @@ public class IssueServiceImpl implements IssueService {
         return this.customerRepository.save(customer);
 
     }
-
 
 
     @Override
@@ -65,7 +80,7 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public void addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException {
+    public String addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException {
         Optional<Issue> optionalIssue = this.issueRepository.findById(issueId);
         if(optionalIssue.isEmpty()){
             throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+issueId);
@@ -73,31 +88,10 @@ public class IssueServiceImpl implements IssueService {
 
         this.issueRepository.getReferenceById(issueId).getSolutions().add(solution);
 
+        return "Solution Added Successfully";
     }
 
     @Override
-
-    public Issue updateIssueDescriptionById(Integer customerId, Integer issueId, String newDesc) throws CustomerNotFoundException, IssueNotFoundException {
-
-        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-
-        List<Issue> issues = customer.getIssues();
-
-// Find the specific issue to update based on its ID
-
-        Issue issueToUpdate = issues.stream()
-                .filter(issue -> issue.getIssueId().equals(issueId))
-                .findFirst()
-                .orElseThrow(() -> new IssueNotFoundException("Issue not found in the list"));
-
-// Update the issue description
-        issueToUpdate.setIssueDescription(newDesc);
-
-// Save the changes to persist the updated issue description
-        issueRepository.save(issueToUpdate);
-        return issueToUpdate;
-
-
     public Customer updateIssueDescById(Integer customerId, Integer issueId, Issue issue) throws CustomerRegisterException, IssueNotFoundException {
         Customer customer;
         Optional<Issue> optIssue = issueRepository.findById(issueId);
@@ -118,58 +112,21 @@ public class IssueServiceImpl implements IssueService {
             throw new IssueNotFoundException("Issue not found");
         }
         return customer;
-
     }
 
     @Override
-    public Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerNotFoundException {
+    public Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerRegisterException {
         Customer customer;
-
-        Optional<Customer> optionalCustomer = this.customerRepository.findById(customerId);
-        if(optionalCustomer.isPresent()){
-            customer = optionalCustomer.get();
-            List<Issue> issueList=customer.getIssues();
-            issueList.add(newIssue);
-            customer.setIssues(issueList);
-
         Optional<Customer> optCustomer = this.customerRepository.findById(customerId);
         if(optCustomer.isPresent()){
             customer = optCustomer.get();
             customer.getIssues().add(newIssue);
-
             this.issueRepository.save(newIssue);
             this.customerRepository.save(customer);
         }
         else{
-            throw new CustomerNotFoundException("No user found with the customerId");
+            throw new CustomerRegisterException("No user found with the customerId");
         }
         return customer;
     }
-
-    @Override
-    public List<Issue> getAllIssuesByCustomerId(Integer customerId) throws CustomerNotFoundException {
-        Optional<Customer> optionalCustomer = this.customerRepository.findById(customerId);
-        if (optionalCustomer.isPresent()) {
-            Customer customer = optionalCustomer.get();
-            return customer.getIssues();
-        } else {
-            throw new CustomerNotFoundException("Customer Not found within the given Id: " + customerId);
-        }
-    }
-
-    @Override
-    public String deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id: " + customerId));
-
-        boolean isRemoved = customer.getIssues().removeIf(issue -> issue.getIssueId().equals(issueId));
-        if (!isRemoved) {
-            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
-        } else {
-            customerRepository.save(customer);
-            issueRepository.deleteById(issueId);
-            return "Deletion success";
-        }
-    }
-
 }

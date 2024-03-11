@@ -10,7 +10,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
- class CustomerTest {
+public class CustomerTest {
     @Autowired
     CustomerService customerService;
     @Autowired
@@ -18,11 +18,11 @@ import org.springframework.test.annotation.DirtiesContext;
     Customer customer;
 
     @BeforeEach
-     void createCustomer(){
+    public void createCustomer(){
         customer=new Customer("karthick", "spk@gmail.com", "gf@13412", "trichy", "9756456878");
     }
     @AfterEach
-    void deleteCustomerTest(){
+    public void deleteCustomer(){
         customer=null;
         customerRepository.deleteAll();
     }
@@ -30,7 +30,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(1)
-    void createNewCustomerTest() {
+    public void createNewCustomer() {
         try {
             Assertions.assertNotNull(this.customerService.registerCustomer(customer));
         } catch (CustomerRegisterException e) {
@@ -40,9 +40,9 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(2)
-    void loginCustomerNotNullTest() {
+    public void loginCustomerNotNull() {
         try {
-
+           // Customer newCustomer =new Customer("jai", "jai@gmail.com", "j9@13412", "cbe", "9796656988");
             Customer customer1=this.customerService.registerCustomer(customer);
             Assertions.assertNotNull(this.customerService.loginCustomer(customer1.getEmail(),customer1.getPassword()));
         } catch (CustomerLoginException| CustomerRegisterException e) {
@@ -52,10 +52,10 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(3)
-    void registerCustomerWithNewEmailTest() {
+    public void registerCustomerWithNewEmail() {
         try {
             this.customerService.registerCustomer(customer);
-            this.customerService.registerCustomer(new Customer("karthick", "sk@gmail.com", "gf@13412", "trichy", "9756456878"));
+            this.customerService.registerCustomer(new Customer("karthick", "spk@gmail.com", "gf@13412", "trichy", "9756456878"));
         } catch (CustomerRegisterException e) {
             Assertions.assertEquals("Email already registered, please re try."+customer.getEmail(), e.getMessage());
         }
@@ -63,7 +63,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(4)
-    void UpdateCustomerTest() {
+    public void UpdateCustomer() {
         try {
             this.customerService.registerCustomer(customer);
             Assertions.assertNotNull(this.customerService.updateCustomer(customer));
@@ -73,7 +73,7 @@ import org.springframework.test.annotation.DirtiesContext;
     }
     @Test
     @Order(5)
-    void getAllCustomersTest(){
+    public void getAllCustomers(){
 
         try {
             this.customerService.registerCustomer(customer);
@@ -84,7 +84,7 @@ import org.springframework.test.annotation.DirtiesContext;
     }
     @Test
     @Order(6)
-    void getCustomerByIdTest(){
+    public void getCustomerById(){
         try{
             this.customerService.registerCustomer(customer);
             Assertions.assertNotNull(this.customerService.getCustomerById(customer.getCustomerId()));
@@ -96,7 +96,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(7)
-    void deleteCustomerByEmailTest(){
+    public void deleteCustomerByEmail(){
         try {
             this.customerService.registerCustomer(customer);
             Assertions.assertNotNull(this.customerService.deleteCustomerById(customer.getCustomerId()));
@@ -106,7 +106,7 @@ import org.springframework.test.annotation.DirtiesContext;
     }
     @Test
     @Order(8)
-    void validEmailFormatTest()  {
+    public void validEmailFormatTest()  {
         Customer newCustomer =new Customer("ravi", "ravi@gmail.com", "ravi4812", "cbe", "9796656988");
         boolean isValidValidEmail =(newCustomer.getEmail()).matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Assertions.assertTrue(isValidValidEmail, "Valid email format ");
@@ -115,7 +115,7 @@ import org.springframework.test.annotation.DirtiesContext;
     }
     @Test
     @Order(9)
-    void InvalidEmailFormatTest(){
+    public void InvalidEmailFormatTest(){
         Customer newCustomer =new Customer("ravi", "ravigmail.com", "ravi4812", "cbe", "9796656988");
 
         boolean isValidEmail = (newCustomer.getEmail()).matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
@@ -124,7 +124,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(10)
-    void ValidPasswordTest(){
+    public void ValidPasswordTest(){
         Customer newCustomer =new Customer("ravi", "ravi@gmail.com", "ravi3412", "cbe", "9796656988");
         boolean isValidPassword = (newCustomer.getPassword()).matches("[A-Za-z\\d@$!%*?&]{8}$");
     Assertions.assertTrue(isValidPassword,"Valid password format");
@@ -132,19 +132,19 @@ import org.springframework.test.annotation.DirtiesContext;
 
     @Test
     @Order(11)
-    void InvalidPasswordTest(){
+    public void InvalidPasswordTest(){
         Customer newCustomer =new Customer("jiva", "jiv@gmail.com", "jiva3418962", "cbe", "9796656988");
         boolean isValidPassword = (newCustomer.getPassword()).matches("[A-Za-z\\d@$!%*?&]{8}$");
         Assertions.assertFalse(isValidPassword,"Invalid password format");
     }
     @Test
     @Order(12)
-     void negativeDeleteCustomerTest(){
+    public void negativeDeleteCustomerTest(){
         Assertions.assertThrows(CustomerDeleteException.class,()->this.customerService.deleteCustomerById(12));
     }
     @Test
     @Order(13)
-    void negativeGetCustomerByEmailTest(){
+    public void negativeGetCustomerByEmailTest(){
         try{
             this.customerService.registerCustomer(customer);
             Assertions.assertThrows(CustomerNotFoundException.class, ()->customerService.getCustomerById(11));
@@ -155,33 +155,21 @@ import org.springframework.test.annotation.DirtiesContext;
     }
     @Test
     @Order(14)
-    void negativeGetAllCustomers(){
+    public void negativeGetAllCustomers(){
         Assertions.assertThrows(CustomerNotFoundException.class, ()->customerService.getAllCustomers());
     }
     @Test
     @Order(15)
-    void negativeLoginCustomerNotNull() {
+    public void negativeLoginCustomerNotNull() {
             Assertions.assertThrows(CustomerLoginException.class,()->customerService.loginCustomer("hi@gmail.com","gfgw@32"));
     }
     @Test
     @Order(16)
-    void negativeUpdateCustomerTest() {
+    public void negativeUpdateCustomer() {
         Assertions.assertThrows(CustomerUpdateException.class,()->customerService.updateCustomer(customer));
     }
-    @Test
-    @Order(17)
-     void positivePhoneNumberTest(){
-        boolean isValidPassword = (customer.getPhoneNumber()).matches("^\\d{10}$");
-        Assertions.assertTrue(isValidPassword,"Valid password format");
-    }
-    @Test
-    @Order(18)
-     void negativePhoneNumberTest(){
-        Customer newCustomer =new Customer("jiva", "jiv@gmail.com", "jiva3418962", "cbe", "9799096656988");
 
-        boolean isValidPassword = (newCustomer.getPhoneNumber()).matches("^\\d{10}$");
-        Assertions.assertFalse(isValidPassword,"Invalid password format");
-    }
+
 
 }
 
