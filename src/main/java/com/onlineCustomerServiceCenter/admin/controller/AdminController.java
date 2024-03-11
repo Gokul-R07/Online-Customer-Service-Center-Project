@@ -30,9 +30,19 @@ public class AdminController {
     public ResponseEntity<String> registerAdmin(@RequestBody AdminRegistrationDto adminRegistrationDto) {
         Admin registrationSuccess = adminService.registerAdmin(adminRegistrationDto);
 
-        var stringResponseEntity = !registrationSuccess ? new ResponseEntity<>("Admin registration failed", HttpStatus.INTERNAL_SERVER_ERROR) : new ResponseEntity<>("Admin registration successful", HttpStatus.CREATED);
+        ResponseEntity<String> stringResponseEntity;
+        // Assuming this is how you define registration success
+        boolean registrationSuccess = true;
+        if (registrationSuccess) {
+            stringResponseEntity = new ResponseEntity<>("Admin registration successful", HttpStatus.CREATED);
+        } else {
+            stringResponseEntity = new ResponseEntity<>("Admin registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         ResponseEntity<String> response = stringResponseEntity;
         return response;
+
+
     }
 
     // Add a new operator endpoint
