@@ -6,13 +6,11 @@ import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-
-import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
+import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
-
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 @Slf4j
 public class OperatorServiceImpl implements OperatorService {
 

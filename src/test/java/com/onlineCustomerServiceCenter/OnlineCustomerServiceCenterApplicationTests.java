@@ -8,11 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class OnlineCustomerServiceCenterApplicationTests {
 
 
-	@Test
-	public void createCutsomer(){
-
-
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
 

@@ -1,10 +1,10 @@
 package com.onlineCustomerServiceCenter.operator.service;
 
-import com.onlineCustomerServiceCenter.issue.entity.Issue;
-import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 
 import java.util.List;
+
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 
 
 

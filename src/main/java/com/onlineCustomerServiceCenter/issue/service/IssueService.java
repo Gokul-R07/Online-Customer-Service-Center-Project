@@ -2,6 +2,7 @@ package com.onlineCustomerServiceCenter.issue.service;
 
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundException;
+import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
@@ -19,7 +20,6 @@ public interface IssueService {
     public List<Issue> getAllIssuesByType(String type);
 
     public void addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException;
-
 
     Issue updateIssueDescriptionById(Integer customerId, Integer issueId, String newDesc) throws CustomerNotFoundException, IssueNotFoundException;
 
