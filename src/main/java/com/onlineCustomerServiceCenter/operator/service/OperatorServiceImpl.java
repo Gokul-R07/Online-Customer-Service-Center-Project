@@ -6,8 +6,8 @@ import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
+import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
@@ -40,9 +40,9 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-        if(email==null ){
+        if (email == null) {
             throw new NullException("Email cannot be null");
-        } else if (password==null) {
+        } else if (password == null) {
             throw new NullException("Password cannot be null");
         }
 
@@ -62,73 +62,68 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-        if(email==null){
+        if (email == null) {
             throw new NullException("Operator Id cannot be null");
-        }
-
-        else if (oldPassword==null) {
+        } else if (oldPassword == null) {
             throw new NullException("Old password cannot be null");
-        }
-        else if (newPassword==null) {
+        } else if (newPassword == null) {
             throw new NullException("New password cannot be null");
         }
-        Optional<Operator> operatorOptional=this.operatorRepository.findOperatorByEmail(email);
-        if(operatorOptional.isPresent()){
-            Operator foundOperator=operatorOptional.get();
-            if(!foundOperator.getPassword().equals(oldPassword)){
+        Optional<Operator> operatorOptional = this.operatorRepository.findOperatorByEmail(email);
+        if (operatorOptional.isPresent()) {
+            Operator foundOperator = operatorOptional.get();
+            if (!foundOperator.getPassword().equals(oldPassword)) {
                 throw new IncorrectPasswordException("Old password is wrong");
             }
             foundOperator.setPassword(newPassword);
             this.operatorRepository.save(foundOperator);
             return "Password changed successfully";
-        }
-        else{
-            throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
+        } else {
+            throw new OperatorNotFoundException("Given Operator email does not exists:" + email);
         }
 
     }
 
 
     @Override
-    public String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException {
-        if(issueId==null){
+    public String addIssueSolution(Integer issueId, String solutionDescription, Integer operatorId) throws IssueNotFoundException, NullException {
+        if (issueId == null) {
             throw new NullException("Issue Id cannot be null");
-        } else if (solutionDescription==null) {
+        } else if (solutionDescription == null) {
             throw new NullException("Solution description cannot be null");
-        } else if (operatorId==null) {
+        } else if (operatorId == null) {
             throw new NullException("Operator Id cannot be null");
         }
 
-        Optional<Issue> issueOptional=  this.issueRepository.findById(issueId);
-         if(issueOptional.isPresent()){
-             Solution solution= new Solution(solutionDescription,operatorId);
-             Solution savedSolution= this.solutionRepository.save(solution);
-             Issue issue=issueOptional.get();
-             issue.getSolutions().add(savedSolution);
-             this.issueRepository.save(issue);
-             return "Solution saved successfully";
-         }else{
-             throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);
-         }
+        Optional<Issue> issueOptional = this.issueRepository.findById(issueId);
+        if (issueOptional.isPresent()) {
+            Solution solution = new Solution(solutionDescription, operatorId);
+            Solution savedSolution = this.solutionRepository.save(solution);
+            Issue issue = issueOptional.get();
+            issue.getSolutions().add(savedSolution);
+            this.issueRepository.save(issue);
+            return "Solution saved successfully";
+        } else {
+            throw new IssueNotFoundException("No Issue found with given issue id:" + issueId);
+        }
 
 
     }
 
     @Override
-    public List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp {
+    public List<Issue> getAllAllocatedIssue() {
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            throw new AllocatedIssueExp("there are no allocated issues");
+            log.info("There are no issues allocated");
         }
         return this.issueRepository.findAll();
-
     }
 
     @Override
-    public Long getAllAllocatedIssueCount() throws AllocatedIssueExp{
+    public Long getAllAllocatedIssueCount() {
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            throw new AllocatedIssueExp("Issues are not present");
+            log.info("There are no issues allocated");
         }
         return this.issueRepository.count();
     }
@@ -146,12 +141,10 @@ public class OperatorServiceImpl implements OperatorService {
                 if (issue.getIssueStatus().equals("pending")) {
                     pendIssues.add(issue);
                 }
-                return pendIssues;
-            }
 
+            }
         }
         return pendIssues;
-
     }
 
     @Override
@@ -201,3 +194,4 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
 }
+

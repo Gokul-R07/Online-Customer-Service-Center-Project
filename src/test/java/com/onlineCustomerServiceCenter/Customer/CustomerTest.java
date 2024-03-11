@@ -84,10 +84,10 @@ public class CustomerTest {
     }
     @Test
     @Order(6)
-    public void getCustomerByEmail(){
+    public void getCustomerById(){
         try{
             this.customerService.registerCustomer(customer);
-            Assertions.assertNotNull(this.customerService.getCustomerByEmail(customer.getEmail()));
+            Assertions.assertNotNull(this.customerService.getCustomerById(customer.getCustomerId()));
         }
         catch(CustomerNotFoundException | CustomerRegisterException e){
             Assertions.fail(e.getMessage());
@@ -99,7 +99,7 @@ public class CustomerTest {
     public void deleteCustomerByEmail(){
         try {
             this.customerService.registerCustomer(customer);
-            Assertions.assertNotNull(this.customerService.deleteCustomerByEmail(customer.getEmail()));
+            Assertions.assertNotNull(this.customerService.deleteCustomerById(customer.getCustomerId()));
         } catch (CustomerDeleteException |CustomerRegisterException e) {
             Assertions.fail(e.getMessage());
         }
@@ -140,14 +140,14 @@ public class CustomerTest {
     @Test
     @Order(12)
     public void negativeDeleteCustomerTest(){
-        Assertions.assertThrows(CustomerDeleteException.class,()->this.customerService.deleteCustomerByEmail("jdd@gmail.com"));
+        Assertions.assertThrows(CustomerDeleteException.class,()->this.customerService.deleteCustomerById(12));
     }
     @Test
     @Order(13)
     public void negativeGetCustomerByEmailTest(){
         try{
             this.customerService.registerCustomer(customer);
-            Assertions.assertThrows(CustomerNotFoundException.class, ()->customerService.getCustomerByEmail("hi@gmail.com"));
+            Assertions.assertThrows(CustomerNotFoundException.class, ()->customerService.getCustomerById(11));
         }
         catch(CustomerRegisterException e){
             Assertions.fail(e.getMessage());
