@@ -6,6 +6,7 @@ import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
@@ -114,19 +115,20 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public List<Issue> getAllAllocatedIssue() {
+    public List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp {
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            log.info("There are no issues allocated");
+            throw new AllocatedIssueExp("there are no allocated issues");
         }
         return this.issueRepository.findAll();
+
     }
 
     @Override
-    public Long getAllAllocatedIssueCount() {
+    public Long getAllAllocatedIssueCount() throws AllocatedIssueExp{
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            log.info("There are no issues allocated");
+            throw new AllocatedIssueExp("Issues are not present");
         }
         return this.issueRepository.count();
     }
