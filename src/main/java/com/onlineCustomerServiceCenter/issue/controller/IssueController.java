@@ -31,22 +31,27 @@ public class IssueController {
 ;
 
     @PostMapping("issue/{customerId}")
+  
     public Customer addIssueToCustomer(@PathVariable Integer customerId,@RequestBody Issue newIssue ) throws CustomerNotFoundException, CustomerRegisterException {
         return this.issueService.addIssueToCustomer(customerId, newIssue);
     }
 
 
     @PutMapping("issue/update/{customerId}/{issueId}")
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException {
-        return this.issueService.updateIssueDescById(customerId, issueId, issue);
-
+    public Issue updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody String newDesc) throws IssueNotFoundException, CustomerNotFoundException {
+        return this.issueService.updateIssueDescriptionById(customerId, issueId, newDesc);
     }
+
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
     public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
         return this.issueService.deleteIssueById(customerId, issueId);
     }
 
+    @DeleteMapping("/{customerId}/issues/{issueId}")
+    public String deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws Exception {
+        return issueService.deleteIssueFromCustomer(customerId, issueId);
+    }
 
     @GetMapping("issues/{customerId}")
     public List<Issue> getAllIssueByCustomerId(@PathVariable Integer customerId) throws CustomerNotFoundException {
