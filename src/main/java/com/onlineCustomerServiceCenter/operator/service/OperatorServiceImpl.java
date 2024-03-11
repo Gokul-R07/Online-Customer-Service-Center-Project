@@ -56,56 +56,60 @@ public class OperatorServiceImpl implements OperatorService {
                 throw new IncorrectPasswordException("Incorrect password");
             }
         } else {
-            throw new OperatorNotFoundException("Operator not found");
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
         }
     }
 
     @Override
     public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-        if (email == null) {
-            throw new NullException("Operator Id cannot be null");
-        } else if (oldPassword == null) {
+        if(email==null){
+            throw new NullException("Operator Email cannot be null");
+        }
+
+        else if (oldPassword==null) {
             throw new NullException("Old password cannot be null");
-        } else if (newPassword == null) {
+        }
+        else if (newPassword==null) {
             throw new NullException("New password cannot be null");
         }
-        Optional<Operator> operatorOptional = this.operatorRepository.findOperatorByEmail(email);
-        if (operatorOptional.isPresent()) {
-            Operator foundOperator = operatorOptional.get();
-            if (!foundOperator.getPassword().equals(oldPassword)) {
+        Optional<Operator> operatorOptional=this.operatorRepository.findOperatorByEmail(email);
+        if(operatorOptional.isPresent()){
+            Operator foundOperator=operatorOptional.get();
+            if(!foundOperator.getPassword().equals(oldPassword)){
                 throw new IncorrectPasswordException("Old password is wrong");
             }
             foundOperator.setPassword(newPassword);
             this.operatorRepository.save(foundOperator);
             return "Password changed successfully";
-        } else {
-            throw new OperatorNotFoundException("Given Operator email does not exists:" + email);
+        }
+        else{
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
         }
 
     }
 
 
     @Override
-    public String addIssueSolution(Integer issueId, String solutionDescription, Integer operatorId) throws IssueNotFoundException, NullException {
-        if (issueId == null) {
+    public String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException {
+        if(issueId==null){
             throw new NullException("Issue Id cannot be null");
-        } else if (solutionDescription == null) {
+        } else if (solutionDescription==null) {
             throw new NullException("Solution description cannot be null");
-        } else if (operatorId == null) {
+        } else if (operatorId==null) {
             throw new NullException("Operator Id cannot be null");
         }
 
-        Optional<Issue> issueOptional = this.issueRepository.findById(issueId);
-        if (issueOptional.isPresent()) {
-            Solution solution = new Solution(solutionDescription, operatorId);
-            Solution savedSolution = this.solutionRepository.save(solution);
-            Issue issue = issueOptional.get();
-            issue.getSolutions().add(savedSolution);
-            this.issueRepository.save(issue);
-            return "Solution saved successfully";
-        } else {
-            throw new IssueNotFoundException("No Issue found with given issue id:" + issueId);
-        }
+        Optional<Issue> issueOptional=  this.issueRepository.findById(issueId);
+         if(issueOptional.isPresent()){
+             Solution solution= new Solution(solutionDescription,operatorId);
+             Solution savedSolution= this.solutionRepository.save(solution);
+             Issue issue=issueOptional.get();
+             issue.getSolutions().add(savedSolution);
+             this.issueRepository.save(issue);
+             return "Solution saved successfully";
+         }else{
+             throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);
+         }
 
 
     }
