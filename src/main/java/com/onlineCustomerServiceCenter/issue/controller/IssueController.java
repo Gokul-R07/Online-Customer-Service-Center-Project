@@ -39,8 +39,8 @@ public class IssueController {
     public Issue updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody String newDesc) throws IssueNotFoundException, CustomerNotFoundException {
         return this.issueService.updateIssueDescriptionById(customerId, issueId, newDesc);
 
-
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException{
+    @PutMapping("/update-issue-by-id")
+    public Customer updateIssueById(@PathVariable("id") Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException{
         return this.issueService.updateIssueDescById(customerId, issueId, issue);
 
     }
