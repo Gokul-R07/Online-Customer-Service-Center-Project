@@ -54,7 +54,7 @@ public class OperatorServiceImpl implements OperatorService {
     public Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException {
          Issue issue=  this.issueService.getIssueById(issueId);
          Solution solution= solutionService.createSolution(solutionDescription);
-        issueService.addSolutionToIssueById(issueId,solution);
+//        issueService.addSolutionToIssueById(issueId,solution);
         return this.issueService.getIssueById(issueId);
     }
 

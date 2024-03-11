@@ -10,6 +10,7 @@ import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,16 +45,7 @@ public class IssueServiceImpl implements IssueService {
         return null;
     }
 
-    @Override
-    public void addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException {
-        Optional<Issue> optionalIssue = this.issueRepository.findById(issueId);
-        if(optionalIssue.isEmpty()){
-            throw new IssueNotFoundException("No Issue exists with the given Issue Id: "+issueId);
-        }
 
-        this.issueRepository.getReferenceById(issueId).getSolutions().add(solution);
-
-    }
 
     @Override
     public Issue updateIssueDescriptionById(Integer customerId, Integer issueId, String newDesc) throws CustomerNotFoundException, IssueNotFoundException {
@@ -71,6 +63,7 @@ public class IssueServiceImpl implements IssueService {
 
 // Update the issue description
         issueToUpdate.setIssueDescription(newDesc);
+        issueToUpdate.setIssueUpdatedDate(LocalDate.now());
 
 // Save the changes to persist the updated issue description
         issueRepository.save(issueToUpdate);

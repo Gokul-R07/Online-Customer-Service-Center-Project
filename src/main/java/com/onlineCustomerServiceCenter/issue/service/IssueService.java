@@ -15,8 +15,6 @@ public interface IssueService {
 
     public List<Issue> getAllIssuesByType(String type);
 
-    public void addSolutionToIssueById(Integer issueId, Solution solution) throws IssueNotFoundException;
-
     Issue updateIssueDescriptionById(Integer customerId, Integer issueId, String newDesc) throws CustomerNotFoundException, IssueNotFoundException;
 
     Customer addIssueToCustomer(Integer customerId, Issue newIssue) throws CustomerNotFoundException;
