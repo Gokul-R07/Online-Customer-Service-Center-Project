@@ -17,8 +17,7 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -45,13 +44,7 @@ public class Customer {
     @OneToMany(fetch = FetchType.EAGER)
     private List<Issue> issues = new ArrayList<>();
 
-    public Customer(String name, String email, String password, String city, String phoneNumber) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-    }
+
 
 }
 

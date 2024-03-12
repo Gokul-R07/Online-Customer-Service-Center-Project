@@ -1,30 +1,12 @@
 package com.onlineCustomerServiceCenter.operator.dto;
 
+import lombok.Data;
+
+@Data
 public class IssueSolutionDto {
     private Integer issueId;
     private String solutionDescription;
+    private Integer operatorId;
 
-    public IssueSolutionDto() {
-    }
 
-    public IssueSolutionDto(Integer issueId, String solutionDescription) {
-        this.issueId = issueId;
-        this.solutionDescription = solutionDescription;
-    }
-
-    public Integer getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(Integer issueId) {
-        this.issueId = issueId;
-    }
-
-    public String getSolutionDescription() {
-        return solutionDescription;
-    }
-
-    public void setSolutionDescription(String solutionDescription) {
-        this.solutionDescription = solutionDescription;
-    }
 }
