@@ -102,8 +102,10 @@ public class OperatorServiceImpl implements OperatorService {
              this.issueRepository.save(issue);
              return "Solution saved successfully";
          }else{
+
              throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);
          }
+
 
 
     }
