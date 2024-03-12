@@ -7,20 +7,24 @@ import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
-import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
-import org.antlr.v4.runtime.misc.LogManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class OperatorServiceImpl implements OperatorService {
 
     @Autowired
@@ -28,11 +32,11 @@ public class OperatorServiceImpl implements OperatorService {
     @Autowired
     private IssueRepository issueRepository;
     @Autowired
+    private SolutionRepository solutionRepository;
+    @Autowired
     private SolutionService solutionService;
     @Autowired
     private IssueService issueService;
-    @Autowired
-    private SolutionRepository solutionRepository;
 
 
     @Override
@@ -53,14 +57,14 @@ public class OperatorServiceImpl implements OperatorService {
                 throw new IncorrectPasswordException("Incorrect password");
             }
         } else {
-            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
+            throw new OperatorNotFoundException("Operator not found");
         }
     }
 
     @Override
     public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         if(email==null){
-            throw new NullException("Operator Email cannot be null");
+            throw new NullException("Operator Id cannot be null");
         }
 
         else if (oldPassword==null) {
@@ -80,7 +84,7 @@ public class OperatorServiceImpl implements OperatorService {
             return "Password changed successfully";
         }
         else{
-            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
+            throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
         }
 
     }
@@ -105,11 +109,95 @@ public class OperatorServiceImpl implements OperatorService {
              this.issueRepository.save(issue);
              return "Solution saved successfully";
          }else{
-
              throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);
          }
 
 
+    }
+
+    @Override
+    public List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp {
+        List<Issue> issues = this.issueRepository.findAll();
+        if(issues.isEmpty()){
+            throw new AllocatedIssueExp("there are no allocated issues");
+        }
+        return this.issueRepository.findAll();
+
+    }
+
+    @Override
+    public Long getAllAllocatedIssueCount() throws AllocatedIssueExp{
+        List<Issue> issues = this.issueRepository.findAll();
+        if(issues.isEmpty()){
+            throw new AllocatedIssueExp("Issues are not present");
+        }
+        return this.issueRepository.count();
+    }
+
+
+    @Override
+    public List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) {
+        Optional<Operator> operatorIdOptional= this.operatorRepository.findById(operatorid);
+        List<Issue> pendIssues = new ArrayList<>();
+        if(operatorIdOptional.isEmpty()) {
+            return Collections.emptyList();
+
+    }
+    else{
+        for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
+            if(issue.getIssueStatus().equals("pending")){
+                pendIssues.add(issue);
+            }
+
+        }
+    }
+        return pendIssues;
+    }
+
+    @Override
+    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid){
+        Optional<Operator> operator = this.operatorRepository.findById(operatorid);
+        List<Issue> allocatedIssue = new ArrayList<>();
+        if(operator.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            for(Issue issue : operator.get().getCustomerIssues()){
+                if(issue.getIssueStatus().equals("pending")){
+                    allocatedIssue.add(issue);
+                }
+            }
+        }
+        return allocatedIssue;
+    }
+
+    @Override
+    public List<Issue> getAllPendingIssue() {
+        List<Issue> issues = this.issueRepository.findAll();
+        List<Issue> pendingIssue = new ArrayList<>();
+
+        for(Issue issue : issues){
+            if(issue.getIssueStatus().equals("pending")){
+                pendingIssue.add(issue);
+            }
+        }
+        if(pendingIssue.isEmpty()){
+            return Collections.emptyList();
+        }
+        else{
+            return pendingIssue;
+        }
+    }
+
+    @Override
+    public Long getAllPendingIssueCount() {
+        List<Issue> issueCounter = getAllPendingIssue();
+        if(issueCounter.isEmpty()){
+            return 0L;
+        }
+        else{
+            return issueCounter.stream().count();
+        }
 
     }
 
