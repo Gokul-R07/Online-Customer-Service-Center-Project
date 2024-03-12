@@ -1,7 +1,7 @@
 package com.onlineCustomerServiceCenter.operator.exceptions;
 
-public class OperatorNotFoundExp extends Exception{
-    public OperatorNotFoundExp(String message) {
+public class OperatorNotFoundException extends Exception{
+    public OperatorNotFoundException(String message) {
         super(message);
     }
 }

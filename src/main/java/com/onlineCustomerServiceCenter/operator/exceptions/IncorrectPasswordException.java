@@ -1,7 +1,7 @@
 package com.onlineCustomerServiceCenter.operator.exceptions;
 
-public class IncorrectPasswordExp extends Exception{
-    public IncorrectPasswordExp(String message) {
+public class IncorrectPasswordException extends Exception{
+    public IncorrectPasswordException(String message) {
         super(message);
     }
 }
