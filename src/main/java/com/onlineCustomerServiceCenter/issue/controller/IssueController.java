@@ -36,16 +36,16 @@ public class IssueController {
     }
 
 
-    @PutMapping("issue/update/{customerId}/{issueId}")
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException {
-        return this.issueService.updateIssueDescById(customerId, issueId, issue);
-
-    }
-
-    @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
-        return this.issueService.deleteIssueById(customerId, issueId);
-    }
+//    @PutMapping("issue/update/{customerId}/{issueId}")
+//    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException {
+//        return this.issueService.updateIssueDescById(customerId, issueId, issue);
+//
+//    }
+//
+//    @DeleteMapping("issue/delete/{customerId}/{issueId}")
+//    public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
+//        return this.issueService.deleteIssueById(customerId, issueId);
+//    }
 
 
     @GetMapping("issues/{customerId}")

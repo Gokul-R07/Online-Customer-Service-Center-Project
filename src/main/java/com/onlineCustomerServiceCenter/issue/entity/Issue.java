@@ -10,18 +10,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-//import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-//@Data
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
 
@@ -40,8 +35,7 @@ public class Issue {
     @OneToMany
     private List<Solution> solutions=new ArrayList<>();
     
-    public Issue() {
-    }
+
 
     public Issue(String issueType, String issueDescription) {
         this.issueType = issueType;
@@ -53,4 +47,7 @@ public class Issue {
         this.solutions = null;
     }
 
+    public Issue() {
+
+    }
 }

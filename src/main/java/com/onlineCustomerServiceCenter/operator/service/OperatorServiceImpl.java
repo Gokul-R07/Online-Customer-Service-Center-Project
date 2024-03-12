@@ -4,7 +4,7 @@ import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.operator.dao.OperatorRespository;
+import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class OperatorServiceImpl implements OperatorService {
 
     @Autowired
-    private OperatorRespository operatorRespository;
+    private OperatorRepository operatorRepository;
     @Autowired
     private IssueRepository issueRepository;
     @Autowired
@@ -31,7 +31,7 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public String loginOperator(String email, String password) {
 
-        Optional<OperatorLoginDto> foundOperator= this.operatorRespository.findOperatorByEmail(email);
+        Optional<OperatorLoginDto> foundOperator= this.operatorRepository.findOperatorByEmail(email);
         if(foundOperator.isPresent()){
                 if(foundOperator.get().getPassword().equals(password)){
                     return "Login Successfull";
@@ -48,7 +48,7 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public Operator updateOperatorProfile(Operator updatedoperator) {
-        return this.operatorRespository.save(updatedoperator);
+        return this.operatorRepository.save(updatedoperator);
     }
     @Override
     public Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException {
