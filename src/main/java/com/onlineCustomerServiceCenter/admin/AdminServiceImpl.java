@@ -1,9 +1,7 @@
 package com.onlineCustomerServiceCenter.admin.service;
 
-import com.onlineCustomerServiceCenter.admin.entity.Admin;
-import com.onlineCustomerServiceCenter.admin.dao.AdminRepository;
-import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
-import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.admin.model.Admin;
+import com.onlineCustomerServiceCenter.admin.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +10,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
-    @Autowired
-    private OperatorRepository operatorRepository;
 
     @Override
     public Admin registerAdmin(Admin newAdmin) {
@@ -23,11 +19,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin loginAdmin(String email, String password) {
         return adminRepository.findByEmailAndPassword(email, password);
-    }
-
-    @Override
-    public Operator registerOperator(Operator newOperator) {
-        return this.operatorRepository.save(newOperator);
     }
 }
 

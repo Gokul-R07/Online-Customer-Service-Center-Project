@@ -2,19 +2,11 @@ package com.onlineCustomerServiceCenter.operator.controller;
 
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
-import com.onlineCustomerServiceCenter.operator.dto.PasswordDto;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
-import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
-import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
-import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.operator.service.OperatorService;
 import com.onlineCustomerServiceCenter.operator.dto.IssueSolutionDto;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
-import jakarta.validation.Valid;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,73 +14,23 @@ import org.springframework.web.bind.annotation.*;
 public class OperatorController {
     @Autowired
     private OperatorService operatorService;
-    @PostMapping("operator/login")
-    public String loginOperator(@RequestBody OperatorLoginDto operatorLoginDto){
-        try {
-            return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
-        } catch (OperatorNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IncorrectPasswordException e) {
-            throw new RuntimeException(e);
-        } catch (NullException e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping("operator")
+    public String loginOperator(@RequestParam OperatorLoginDto operatorLoginDto){
+        return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
     }
-    @PatchMapping("operator")
-    public String changePassword(@RequestBody PasswordDto passwordDto){
-            try {
-                return this.operatorService.changePassword(passwordDto.getEmail(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
-
-            } catch (OperatorNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IncorrectPasswordException e) {
-                throw new RuntimeException(e);
-            } catch (NullException e) {
-                throw new RuntimeException(e);
-            }
-
+    @PutMapping("operator")
+    public Operator updateOperatorProfile(@RequestBody Operator updatedoperator){
+        return this.operatorService.updateOperatorProfile(updatedoperator);
     }
     @PostMapping("operator/solution")
-    public String addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto){
+    public Issue addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto){
         try {
-            return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(),issueSolutionDto.getSolutionDescription(),issueSolutionDto.getOperatorId());
-        } catch (IssueNotFoundException e) {
+            return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(),issueSolutionDto.getSolutionDescription());
+        } catch (SolutionException e) {
             throw new RuntimeException(e);
-        } catch (NullException e) {
+        } catch (IssueNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
-
-   
-    @GetMapping("/pending-issue-by-id")
-    public List<Issue> getAllPendingIssue(@RequestBody Integer operatorid){
-        return operatorService.getAllPendingIssueByOperatorId(operatorid);
-    }
-
-    @GetMapping("/Allocated-issue-by-id")
-    public List<Issue> getAllAllocatedIssueById(@RequestBody Integer operatorid){
-        return operatorService.getAllAllocatedIssueByOperatorId(operatorid);
-    }
-
-    @GetMapping("/Allocated-issue")
-    public List<Issue> getAllAllocatedIssue(){
-        return this.operatorService.getAllAllocatedIssue();
-    }
-
-    @GetMapping("/Allocated-issue-count")
-    public Long getAllAllocatedIssueCount(){
-        return this.operatorService.getAllAllocatedIssueCount();
-    }
-
-    @GetMapping("/Pending-issue")
-    public List<Issue> getAllPendingIssue(){
-        return this.operatorService.getAllPendingIssue();
-    }
-
-    @GetMapping("/Pending-issue-count")
-    public Long getAllPendingIssueCount(){
-        return this.operatorService.getAllPendingIssueCount();
-    }
-
 
 }

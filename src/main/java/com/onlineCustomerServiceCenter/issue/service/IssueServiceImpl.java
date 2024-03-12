@@ -6,7 +6,6 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundExcep
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
-import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +54,9 @@ public class IssueServiceImpl implements IssueService {
         List<Issue> issues = customer.getIssues();
 
 // Find the specific issue to update based on its ID
-
+        if(issues.isEmpty()){
+            throw new NullPointerException("No issue in the list");
+        }
         Issue issueToUpdate = issues.stream()
                 .filter(issue -> issue.getIssueId().equals(issueId))
                 .findFirst()

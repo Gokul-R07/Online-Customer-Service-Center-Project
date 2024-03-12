@@ -39,14 +39,14 @@ public class CustomerController {
         return this.customerService.getAllCustomers();
     }
 
-    @GetMapping("customer/{id}")
-    public Customer getCustomerById(@PathVariable Integer id) throws CustomerNotFoundException{
-        return this.customerService.getCustomerById(id);
+    @GetMapping("customer/{email}")
+    public Customer getCustomerByEmail(@PathVariable String email) throws CustomerNotFoundException{
+        return this.customerService.getCustomerByEmail(email);
     }
 
-    @DeleteMapping("customer/{id}")
-    public Customer deleteCustomerById(@PathVariable Integer id) throws CustomerDeleteException {
-        return this.customerService.deleteCustomerById(id);
+    @DeleteMapping("customer/{email}")
+    public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
+        return this.customerService.deleteCustomerByEmail(email);
     }
     @PatchMapping("customer")
     public Solution acceptSolution(@RequestParam Integer solutionId) throws SolutionException{
