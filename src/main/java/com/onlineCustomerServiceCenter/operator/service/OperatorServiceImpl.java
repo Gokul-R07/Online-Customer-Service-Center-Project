@@ -197,6 +197,7 @@ public class OperatorServiceImpl implements OperatorService {
         else{
             return issueCounter.stream().count();
         }
+
     }
 
 }
