@@ -7,9 +7,14 @@ import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
+import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
+import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
+import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
+import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,36 +31,86 @@ public class OperatorServiceImpl implements OperatorService {
     private SolutionService solutionService;
     @Autowired
     private IssueService issueService;
+    @Autowired
+    private SolutionRepository solutionRepository;
 
 
     @Override
-    public String loginOperator(String email, String password) {
+    public String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+        if(email==null ){
+            throw new NullException("Email cannot be null");
+        } else if (password==null) {
+            throw new NullException("Password cannot be null");
+        }
 
-        Optional<OperatorLoginDto> foundOperator= this.operatorRepository.findOperatorByEmail(email);
-        if(foundOperator.isPresent()){
-                if(foundOperator.get().getPassword().equals(password)){
-                    return "Login Successfull";
-                }else{
-                    return "Password is Wrong";
-                }
+        Optional<Operator> operatorOptional = operatorRepository.findOperatorByEmail(email);
 
-        }else {
-            return "Account does not exits";
+        if (operatorOptional.isPresent()) {
+            Operator operator = operatorOptional.get();
+            if (operator.getPassword().equals(password)) {
+                return "Login successful";
+            } else {
+                throw new IncorrectPasswordException("Incorrect password");
+            }
+        } else {
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
         }
     }
 
-
-
     @Override
-    public Operator updateOperatorProfile(Operator updatedoperator) {
-        return this.operatorRepository.save(updatedoperator);
+    public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+        if(email==null){
+            throw new NullException("Operator Email cannot be null");
+        }
+
+        else if (oldPassword==null) {
+            throw new NullException("Old password cannot be null");
+        }
+        else if (newPassword==null) {
+            throw new NullException("New password cannot be null");
+        }
+        Optional<Operator> operatorOptional=this.operatorRepository.findOperatorByEmail(email);
+        if(operatorOptional.isPresent()){
+            Operator foundOperator=operatorOptional.get();
+            if(!foundOperator.getPassword().equals(oldPassword)){
+                throw new IncorrectPasswordException("Old password is wrong");
+            }
+            foundOperator.setPassword(newPassword);
+            this.operatorRepository.save(foundOperator);
+            return "Password changed successfully";
+        }
+        else{
+            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
+        }
+
     }
+
+
     @Override
-    public Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException {
-         Issue issue=  this.issueService.getIssueById(issueId);
-         Solution solution= solutionService.createSolution(solutionDescription);
-//        issueService.addSolutionToIssueById(issueId,solution);
-        return this.issueService.getIssueById(issueId);
+    public String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException {
+        if(issueId==null){
+            throw new NullException("Issue Id cannot be null");
+        } else if (solutionDescription==null) {
+            throw new NullException("Solution description cannot be null");
+        } else if (operatorId==null) {
+            throw new NullException("Operator Id cannot be null");
+        }
+
+        Optional<Issue> issueOptional=  this.issueRepository.findById(issueId);
+         if(issueOptional.isPresent()){
+             Solution solution= new Solution(solutionDescription,operatorId);
+             Solution savedSolution= this.solutionRepository.save(solution);
+             Issue issue=issueOptional.get();
+             issue.getSolutions().add(savedSolution);
+             this.issueRepository.save(issue);
+             return "Solution saved successfully";
+         }else{
+
+             throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);
+         }
+
+
+
     }
 
 }
