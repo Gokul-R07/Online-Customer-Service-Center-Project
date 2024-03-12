@@ -7,9 +7,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,9 @@ import java.util.List;
 
 @Entity
 @Data
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -45,6 +48,12 @@ public class Customer {
     private List<Issue> issues = new ArrayList<>();
 
 
-
+    public Customer(String name, String email, String password, String city, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
 }
 
