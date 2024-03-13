@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
+@CrossOrigin(origins ="http://localhost:4200/")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -25,12 +26,12 @@ public class CustomerController {
     }
 
     @PostMapping("login/customer")
-    public Customer loginCustomer(@RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
+    public Customer loginCustomer(@Valid @RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
         return this.customerService.loginCustomer(loginDto.getCustomerEmail(), loginDto.getCustomerPassword());
     }
 
     @PutMapping("update/customer")
-    public Customer updateCustomerProfile(@RequestBody Customer customer) throws CustomerUpdateException {
+    public Customer updateCustomerProfile(@Valid @RequestBody Customer customer) throws CustomerUpdateException {
         return this.customerService.updateCustomer(customer);
     }
 

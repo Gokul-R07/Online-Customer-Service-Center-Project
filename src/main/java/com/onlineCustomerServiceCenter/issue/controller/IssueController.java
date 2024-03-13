@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins ="http://localhost:4200/")
 public class IssueController {
 
     @Autowired
@@ -48,10 +49,10 @@ public class IssueController {
     }
 
 
-    @GetMapping("issues/{customerId}")
-    public List<Issue> getAllIssueByCustomerId(@PathVariable Integer customerId) throws CustomerNotFoundException {
-        return this.issueService.getAllIssuesByCustomerId(customerId);
-    }
+//    @GetMapping("issues/{customerId}")
+//    public List<Issue> getAllIssueByCustomerId(@PathVariable Integer customerId) throws CustomerNotFoundException {
+//        return this.issueService.getAllIssuesByCustomerId(customerId);
+//    }
 
     @GetMapping("issues")
     public List<Issue> getAllIssue(){

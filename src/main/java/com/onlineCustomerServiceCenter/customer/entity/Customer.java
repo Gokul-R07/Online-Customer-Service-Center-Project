@@ -17,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 
 public class Customer {
     @Id
@@ -39,12 +40,18 @@ public class Customer {
     private String city;
     @NotNull(message = "customer phoneNumber cannot be null")
     @NotBlank(message = "customer name cannot be null")
+    @Pattern(regexp="^\\d{10}$", message="phone number should contain 10 digit")
     private String phoneNumber;
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     private List<Issue> issues = new ArrayList<>();
 
-
-
+    public Customer(String name, String email, String password, String city, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
 }
 

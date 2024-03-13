@@ -19,7 +19,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -40,4 +39,12 @@ public class Issue {
     @OneToMany
     private List<Solution> solutions=new ArrayList<>();
 
+    public Issue(String issueType, LocalDate issueCreationDate, LocalDate issueUpdatedDate, Boolean ticketClose, String issueStatus, String issueDescription) {
+        this.issueType = issueType;
+        this.issueCreationDate = issueCreationDate;
+        this.issueUpdatedDate = issueUpdatedDate;
+        this.ticketClose = ticketClose;
+        this.issueStatus = issueStatus;
+        this.issueDescription = issueDescription;
+    }
 }

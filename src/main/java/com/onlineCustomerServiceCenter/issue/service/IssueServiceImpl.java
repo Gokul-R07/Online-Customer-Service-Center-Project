@@ -2,6 +2,7 @@ package com.onlineCustomerServiceCenter.issue.service;
 
 import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
+import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
@@ -90,6 +91,8 @@ public class IssueServiceImpl implements IssueService {
 
         return "Solution Added Successfully";
     }
+
+
 
     @Override
     public Customer updateIssueDescById(Integer customerId, Integer issueId, Issue issue) throws CustomerRegisterException, IssueNotFoundException {
