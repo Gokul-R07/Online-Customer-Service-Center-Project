@@ -13,7 +13,7 @@ import java.util.List;
 public interface IssueService {
 
     public Issue getIssueById(Integer id) throws IssueNotFoundException;
-    public List<Issue> getAllIssues();
+    public List<Issue> getAllIssues() throws NullIssueException;
 
     public List<Issue> getAllIssuesByType(String type);
 

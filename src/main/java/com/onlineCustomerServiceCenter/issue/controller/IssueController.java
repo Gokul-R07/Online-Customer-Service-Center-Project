@@ -8,6 +8,7 @@ import com.onlineCustomerServiceCenter.customer.service.CustomerService;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class IssueController {
 
     @Autowired
@@ -54,7 +56,7 @@ public class IssueController {
     }
 
     @GetMapping("issues")
-    public List<Issue> getAllIssue(){
+    public List<Issue> getAllIssue() throws NullIssueException {
         return this.issueService.getAllIssues();
     }
 

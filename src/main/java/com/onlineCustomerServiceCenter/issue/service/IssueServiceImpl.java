@@ -6,6 +6,7 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundExcep
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,12 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> getAllIssues() {
-        return this.issueRepository.findAll();
+    public List<Issue> getAllIssues() throws NullIssueException {
+        List<Issue> issuesOptioal=this.issueRepository.findAll();
+        if(issuesOptioal.isEmpty())
+            throw new NullIssueException("No issue exit in the List");
+
+        return issuesOptioal;
     }
 
     @Override
