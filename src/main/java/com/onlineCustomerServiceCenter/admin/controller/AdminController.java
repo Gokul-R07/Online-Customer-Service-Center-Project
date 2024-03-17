@@ -12,13 +12,13 @@ public class AdminController {
     @Autowired
    private AdminService adminService;
 
-    @PostMapping("/registerAdmin")
-    public Admin registerAdmin(@RequestBody Admin newAdmin) {
-        return adminService.registerAdmin(newAdmin);
-    }
-
-    @PostMapping("/loginAdmin")
-    public Admin loginAdmin(@RequestBody Admin adminCredentials) {
-        return adminService.loginAdmin(adminCredentials.getEmail(), adminCredentials.getPassword());
-    }
+//    @PostMapping("/registerAdmin")
+//    public Admin registerAdmin(@RequestBody Admin newAdmin) {
+//        return adminService.registerAdmin(newAdmin);
+//    }
+//
+//    @PostMapping("/loginAdmin")
+//    public Admin loginAdmin(@RequestBody Admin adminCredentials) {
+//        return adminService.adminLogin(adminCredentials.getEmail(), adminCredentials.getPassword());
+//    }
 }

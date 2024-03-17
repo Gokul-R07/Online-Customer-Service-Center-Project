@@ -44,7 +44,7 @@ public class Operator {
     @OneToMany
     private List<Issue> customerIssues=new ArrayList<>();
 
-    public Operator(Integer operatorId, String firstName, String lastName, String email, String password, String departmentName, String phoneNumber, String city, List<Issue> customerIssues) {
+    public Operator(String firstName, String lastName, String email, String password) {
         this.operatorId = operatorId;
         this.firstName = firstName;
         this.lastName = lastName;
