@@ -19,7 +19,7 @@ public class CustomerTest {
 
     @BeforeEach
     public void createCustomer(){
-        customer=new Customer("karthick", "spk@gmail.com", "gf@13412", "trichy", "9756456878");
+        customer=new Customer("karthick","S P", "spk@gmail.com", "gf@13412", "trichy", "9756456878");
     }
     @AfterEach
     public void deleteCustomer(){
@@ -42,7 +42,7 @@ public class CustomerTest {
     @Order(2)
     public void loginCustomerNotNull() {
         try {
-           // Customer newCustomer =new Customer("jai", "jai@gmail.com", "j9@13412", "cbe", "9796656988");
+           // Customer newCustomer =new Customer("jai","S P", "jai@gmail.com", "j9@13412", "cbe", "9796656988");
             Customer customer1=this.customerService.registerCustomer(customer);
             Assertions.assertNotNull(this.customerService.loginCustomer(customer1.getEmail(),customer1.getPassword()));
         } catch (CustomerLoginException| CustomerRegisterException e) {
@@ -55,7 +55,7 @@ public class CustomerTest {
     public void registerCustomerWithNewEmail() {
         try {
             this.customerService.registerCustomer(customer);
-            this.customerService.registerCustomer(new Customer("karthick", "spk@gmail.com", "gf@13412", "trichy", "9756456878"));
+            this.customerService.registerCustomer(new Customer("karthick", "S P","spk@gmail.com", "gf@13412", "trichy", "9756456878"));
         } catch (CustomerRegisterException e) {
             Assertions.assertEquals("Email already registered, please re try."+customer.getEmail(), e.getMessage());
         }
@@ -107,7 +107,7 @@ public class CustomerTest {
     @Test
     @Order(8)
     public void validEmailFormatTest()  {
-        Customer newCustomer =new Customer("ravi", "ravi@gmail.com", "ravi4812", "cbe", "9796656988");
+        Customer newCustomer =new Customer("ravi", "S P","ravi@gmail.com", "ravi4812", "cbe", "9796656988");
         boolean isValidValidEmail =(newCustomer.getEmail()).matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Assertions.assertTrue(isValidValidEmail, "Valid email format ");
 
@@ -116,7 +116,7 @@ public class CustomerTest {
     @Test
     @Order(9)
     public void InvalidEmailFormatTest(){
-        Customer newCustomer =new Customer("ravi", "ravigmail.com", "ravi4812", "cbe", "9796656988");
+        Customer newCustomer =new Customer("ravi","S P", "ravigmail.com", "ravi4812", "cbe", "9796656988");
 
         boolean isValidEmail = (newCustomer.getEmail()).matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Assertions.assertFalse(isValidEmail, "Invalid email format");
@@ -125,7 +125,7 @@ public class CustomerTest {
     @Test
     @Order(10)
     public void ValidPasswordTest(){
-        Customer newCustomer =new Customer("ravi", "ravi@gmail.com", "ravi3412", "cbe", "9796656988");
+        Customer newCustomer =new Customer("ravi","S P", "ravi@gmail.com", "ravi3412", "cbe", "9796656988");
         boolean isValidPassword = (newCustomer.getPassword()).matches("[A-Za-z\\d@$!%*?&]{8}$");
     Assertions.assertTrue(isValidPassword,"Valid password format");
     }
@@ -133,7 +133,7 @@ public class CustomerTest {
     @Test
     @Order(11)
     public void InvalidPasswordTest(){
-        Customer newCustomer =new Customer("jiva", "jiv@gmail.com", "jiva3418962", "cbe", "9796656988");
+        Customer newCustomer =new Customer("jiva","S P", "jiv@gmail.com", "jiva3418962", "cbe", "9796656988");
         boolean isValidPassword = (newCustomer.getPassword()).matches("[A-Za-z\\d@$!%*?&]{8}$");
         Assertions.assertFalse(isValidPassword,"Invalid password format");
     }

@@ -25,10 +25,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer customerId;
-    @NotNull(message = "customer name cannot be null")
-    @NotBlank(message = "customer name cannot be blank ")
-    private String name;
 
+    @NotNull(message = "customer first name cannot be null")
+    @NotBlank(message = "customer first name cannot be blank ")
+    private String firstName;
+    @NotNull(message = "customer last name cannot be null")
+    @NotBlank(message = "customer last name cannot be blank ")
+    private String lastName;
     @NotNull(message = "customer email cannot be null")
     @NotBlank(message = "customer email cannot be blank")
     @Email(message="email is not in correct format, Eg. ford@gmail.com")
@@ -48,8 +51,9 @@ public class Customer {
     private List<Issue> issues = new ArrayList<>();
 
 
-    public Customer(String name, String email, String password, String city, String phoneNumber) {
-        this.name = name;
+    public Customer(String firstName, String lastName , String email, String password, String city, String phoneNumber) {
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.email = email;
         this.password = password;
         this.city = city;
