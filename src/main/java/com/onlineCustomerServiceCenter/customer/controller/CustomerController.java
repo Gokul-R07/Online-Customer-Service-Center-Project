@@ -26,7 +26,7 @@ public class CustomerController {
 
     @PostMapping("login/customer")
     public Customer loginCustomer(@RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
-        return this.customerService.loginCustomer(loginDto.getCustomerEmail(), loginDto.getCustomerPassword());
+        return this.customerService.loginCustomer(loginDto.getEmail(), loginDto.getPassword());
     }
 
     @PutMapping("update/customer")

@@ -1,6 +1,6 @@
 package com.onlineCustomerServiceCenter.admin.service;
 
-import com.onlineCustomerServiceCenter.admin.model.Admin;
+import com.onlineCustomerServiceCenter.admin.entity.Admin;
 
 public interface AdminService {
 

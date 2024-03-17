@@ -1,7 +1,7 @@
 package com.onlineCustomerServiceCenter.admin.service;
 
-import com.onlineCustomerServiceCenter.admin.model.Admin;
-import com.onlineCustomerServiceCenter.admin.repository.AdminRepository;
+import com.onlineCustomerServiceCenter.admin.entity.Admin;
+import com.onlineCustomerServiceCenter.admin.dao.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

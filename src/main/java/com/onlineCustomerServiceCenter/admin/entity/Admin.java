@@ -1,22 +1,40 @@
-package com.onlineCustomerServiceCenter.admin.adto;
+package com.onlineCustomerServiceCenter.admin.entity;
 
-public class AdminRegistrationDto {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
+public class Admin {
+    @Id
+    @GeneratedValue()
+    private Integer adminId;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    public AdminRegistrationDto(String firstName, String lastName, String email, String password) {
+    public Admin() {
+    }
+
+    public Admin(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
-    public AdminRegistrationDto() {
+    public Integer getAdminId() {
+        return adminId;
     }
 
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -44,10 +62,5 @@ public class AdminRegistrationDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFirstName() {
-
-        return null;
     }
 }
