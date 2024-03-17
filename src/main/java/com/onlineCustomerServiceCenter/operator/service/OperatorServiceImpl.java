@@ -33,7 +33,7 @@ public class OperatorServiceImpl implements OperatorService {
 
 
     @Override
-    public String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+    public Operator loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         if(email==null ){
             throw new NullException("Email cannot be null");
         } else if (password==null) {
@@ -45,7 +45,7 @@ public class OperatorServiceImpl implements OperatorService {
         if (operatorOptional.isPresent()) {
             Operator operator = operatorOptional.get();
             if (operator.getPassword().equals(password)) {
-                return "Login successful";
+                return operator;
             } else {
                 throw new IncorrectPasswordException("Incorrect password");
             }

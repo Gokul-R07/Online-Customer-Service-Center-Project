@@ -4,6 +4,7 @@ import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.operator.dto.PasswordDto;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
@@ -19,7 +20,7 @@ public class OperatorController {
     @Autowired
     private OperatorService operatorService;
     @PostMapping("operator/login")
-    public String loginOperator(@RequestBody OperatorLoginDto operatorLoginDto){
+    public Operator loginOperator(@RequestBody OperatorLoginDto operatorLoginDto){
         try {
             return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
         } catch (OperatorNotFoundException e) {
