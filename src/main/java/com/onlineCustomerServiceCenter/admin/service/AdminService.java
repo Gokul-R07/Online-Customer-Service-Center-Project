@@ -12,12 +12,11 @@ public interface AdminService {
     Admin registerAdmin(AdminRegistrationDto adminRegistrationDto) ;
     
 
-    boolean deleteOperator(int operatorId);
-
+    //boolean deleteOperator(int operatorId);
+     Operator deleteOperator(int operatorId);
     Operator createOperator(Operator operator);
+    Operator updateOperator(Operator operator);
 
 
-    Admin adminLogin(String email, String password);
 
-    Admin registerAdmin(Admin newAdmin);
 }

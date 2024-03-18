@@ -1,17 +1,20 @@
 package com.onlineCustomerServiceCenter.admin.controller;
 
 import com.onlineCustomerServiceCenter.admin.adto.AdminLoginDto;
+import com.onlineCustomerServiceCenter.admin.adto.AdminRegistrationDto;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
 import com.onlineCustomerServiceCenter.admin.service.AdminService;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.service.OperatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
-
-    private final AdminService adminService;
-    private final OperatorService operatorService;
+     @Autowired
+    private  AdminService adminService;
+    @Autowired
+    private  OperatorService operatorService;
 
     public AdminController(AdminService adminService, OperatorService operatorService) {
         this.adminService = adminService;
@@ -20,11 +23,11 @@ public class AdminController {
 
     @PostMapping("admin/login")
     public Admin adminLogin(@RequestBody AdminLoginDto loginDto)  {
-        return adminService.adminLogin(loginDto.getEmail(), loginDto.getPassword());
+        return adminService.adminLogin(loginDto);
     }
 
     @PostMapping("admin/register")
-    public Admin registerAdmin(@RequestBody Admin newAdmin) {
+    public Admin registerAdmin(@RequestBody AdminRegistrationDto newAdmin) {
         return adminService.registerAdmin(newAdmin);
     }
 

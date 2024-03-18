@@ -7,11 +7,5 @@ public class AdminLoginDto {
     private String email;
     private String password;
 
-    public AdminLoginDto(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 
-    public AdminLoginDto() {
-    }
 }

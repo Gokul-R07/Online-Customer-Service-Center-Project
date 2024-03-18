@@ -2,46 +2,91 @@ package com.onlineCustomerServiceCenter.admin.service;
 
 import com.onlineCustomerServiceCenter.admin.adto.AdminLoginDto;
 import com.onlineCustomerServiceCenter.admin.adto.AdminRegistrationDto;
+import com.onlineCustomerServiceCenter.admin.dao.AdminRepository;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
+import com.onlineCustomerServiceCenter.admin.exceptions.AdminLoginException;
+import com.onlineCustomerServiceCenter.admin.exceptions.AdminRegistrationException;
+import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service
-public abstract class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements AdminService {
 
-    private final List<Admin> adminList = new ArrayList<>();
+
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private OperatorRepository operatorRepository;
 
     @Override
-    public Admin adminLogin(AdminLoginDto adminLoginDto) {
-        // Simulated logic to validate admin login
-        for (Admin admin : adminList) {
-            if (admin.getPassword().equals(adminLoginDto.getPassword()))
-                if (admin.getEmail().equals(adminLoginDto.getEmail())) {
-                    return admin; // Return the logged-in admin
-                }
+    public Admin adminLogin(AdminLoginDto adminLoginDto)  {
+        String email = adminLoginDto.getEmail();
+        String password = adminLoginDto.getPassword();
+
+        Admin admin = adminRepository.findByEmailAndPassword(email, password);
+        if (admin == null) {
+            throw new AdminLoginException("Invalid credentials. Please check your email and password.");
         }
-        return null; // Return null if login credentials are invalid
+
+        return admin;
     }
 
     @Override
     public Admin registerAdmin(AdminRegistrationDto adminRegistrationDto) {
-        // Simulated logic to register a new admin
-        Admin newAdmin = new Admin(adminRegistrationDto.getFirstName(), adminRegistrationDto.getLastName(),
-                adminRegistrationDto.getEmail(), adminRegistrationDto.getPassword());
-        adminList.add(newAdmin); // Add the new admin to the list
-        return newAdmin; // Return the registered admin
+        String email = adminRegistrationDto.getEmail();
+        String password = adminRegistrationDto.getPassword();
+
+        Admin existingAdmin = adminRepository.findByEmail(email);
+        if (existingAdmin != null) {
+            throw new AdminRegistrationException("Admin with email " + email + " already exists.");
+        }
+
+        Admin newAdmin = new Admin();
+        return adminRepository.save(newAdmin);
     }
 
+
     @Override
-    public boolean deleteOperator(int operatorId) {
-        return false;
-    }
+    public Operator deleteOperator(int operatorId) {
+
+            Optional<Operator> operatorOpt = this.operatorRepository.findById(operatorId);
+            this.operatorRepository.deleteById(operatorOpt.get().getOperatorId());
+            Operator operatorToBeDeleted= operatorOpt.get();
+            return  operatorToBeDeleted;
+        }
+
+
 
     @Override
     public Operator createOperator(Operator operator) {
-        return null;
+        // Implement logic to create a new Operator
+        return operatorRepository.save(operator);
+    }
+
+    @Override
+    public Operator updateOperator(Operator operator) {
+        Optional<Operator> existingOperator = null;
+        Operator operator1 = new Operator();
+        try {
+            existingOperator = operatorRepository.findById(operator.getOperatorId());
+            if(existingOperator.isPresent()) {
+                operator1.setFirstName(operator.getName());
+                operator1.setEmail(operator.getEmail());
+                operator1.setPhoneNumber(operator.getPhoneNumber());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        // Update the existing operator with new details
+
+
+        return operatorRepository.save(operator1);
     }
 }

@@ -9,17 +9,4 @@ public class AdminRegistrationDto {
     private String email;
     private String password;
 
-    public AdminRegistrationDto(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public AdminRegistrationDto() {
-    }
-
-    public Object getName() {
-        return null;
-    }
 }

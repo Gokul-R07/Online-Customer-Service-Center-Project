@@ -1,7 +1,6 @@
 package com.onlineCustomerServiceCenter.operator.entity;
 
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
-import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,11 +9,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
+@Getter
 public class Operator {
     @Id
     @GeneratedValue()
@@ -130,5 +133,10 @@ public class Operator {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public String getName() {
+
+        return null;
     }
 }
