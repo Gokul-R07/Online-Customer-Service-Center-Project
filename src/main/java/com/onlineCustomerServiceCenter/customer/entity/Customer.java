@@ -46,7 +46,6 @@ public class Customer {
     @NotNull(message = "customer phoneNumber cannot be null")
     @NotBlank(message = "customer name cannot be null")
     private String phoneNumber;
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     private List<Issue> issues = new ArrayList<>();
 

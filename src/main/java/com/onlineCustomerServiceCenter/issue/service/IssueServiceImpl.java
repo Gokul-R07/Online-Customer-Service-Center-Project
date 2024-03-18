@@ -81,14 +81,16 @@ public class IssueServiceImpl implements IssueService {
             List<Issue> issueList=customer.getIssues();
             issueList.add(newIssue);
             customer.setIssues(issueList);
-            this.issueRepository.save(newIssue);
+            System.out.print(newIssue);
+            Issue savedIssue= this.issueRepository.save(newIssue);
+            System.out.print(savedIssue);
             this.customerRepository.save(customer);
 
         }
         else{
             throw new CustomerNotFoundException("No user found with the customerId");
         }
-        return customer;
+        return this.customerRepository.findById(customerId).get();
     }
 
     @Override

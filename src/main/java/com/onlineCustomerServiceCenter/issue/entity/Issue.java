@@ -3,25 +3,18 @@ package com.onlineCustomerServiceCenter.issue.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 //import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-//@Data
 @Entity
 @Data
-//@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
 
@@ -47,7 +40,7 @@ public class Issue {
         this.issueType = issueType;
         this.issueCreationDate = LocalDate.now();
         this.issueUpdatedDate = null;
-        this.issueStatus = "Unsolved";
+        this.issueStatus = "pending";
         this.issueDescription = issueDescription;
         this.ticketClose = false;
         this.solutions = null;
