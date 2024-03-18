@@ -28,41 +28,19 @@ public class OperatorController {
     @Autowired
     private OperatorService operatorService;
     @PostMapping("operator/login")
-    public Operator loginOperator(@RequestBody OperatorLoginDto operatorLoginDto){
-        try {
-            return this.operatorService.loginOperator(operatorLoginDto.getEmail(),operatorLoginDto.getPassword());
-        } catch (OperatorNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IncorrectPasswordException e) {
-            throw new RuntimeException(e);
-        } catch (NullException e) {
-            throw new RuntimeException(e);
-        }
+    public Operator loginOperator(@RequestBody OperatorLoginDto operatorLoginDto) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+        return this.operatorService.loginOperator(operatorLoginDto.getEmail(), operatorLoginDto.getPassword());
     }
     @PatchMapping("operator")
-    public String changePassword(@RequestBody PasswordDto passwordDto){
-            try {
+    public String changePassword(@RequestBody PasswordDto passwordDto) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
                 return this.operatorService.changePassword(passwordDto.getEmail(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
-
-            } catch (OperatorNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IncorrectPasswordException e) {
-                throw new RuntimeException(e);
-            } catch (NullException e) {
-                throw new RuntimeException(e);
-            }
-
     }
     @PostMapping("operator/solution")
-    public String addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto){
-        try {
-            return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(),issueSolutionDto.getSolutionDescription(),issueSolutionDto.getOperatorId());
-        } catch (IssueNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (NullException e) {
-            throw new RuntimeException(e);
-        }
+    public String addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto) throws IssueNotFoundException, NullException {
+        return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(), issueSolutionDto.getSolutionDescription(), issueSolutionDto.getOperatorId());
     }
+
+
 
 
     @GetMapping("/pending-issue-by-id")
