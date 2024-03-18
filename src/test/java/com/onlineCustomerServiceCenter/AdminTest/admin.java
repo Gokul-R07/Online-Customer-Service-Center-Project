@@ -1,7 +1,5 @@
 package com.onlineCustomerServiceCenter.AdminTest;
 
-import com.onlineCustomerServiceCenter.admin.service.AdminService;
-import com.onlineCustomerServiceCenter.admin.service.AdminServiceImpl;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

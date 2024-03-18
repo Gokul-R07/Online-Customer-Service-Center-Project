@@ -7,15 +7,17 @@ import com.onlineCustomerServiceCenter.operator.entity.Operator;
 
 public interface AdminService {
 
-    default Admin adminLogin(AdminLoginDto adminLoginDto) {
-        return null;
-    }
+    Admin adminLogin(AdminLoginDto adminLoginDto);
 
-    default Admin registerAdmin(AdminRegistrationDto adminRegistrationDto) {
-        return null;
-    }
+    Admin registerAdmin(AdminRegistrationDto adminRegistrationDto) ;
+    
 
     boolean deleteOperator(int operatorId);
 
     Operator createOperator(Operator operator);
+
+
+    Admin adminLogin(String email, String password);
+
+    Admin registerAdmin(Admin newAdmin);
 }

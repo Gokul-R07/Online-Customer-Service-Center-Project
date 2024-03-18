@@ -9,6 +9,7 @@ import com.onlineCustomerServiceCenter.issue.entity.Issue;
 
 
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.exceptions.*;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 
@@ -44,6 +45,11 @@ public interface OperatorService {
     List<Issue> getAllPendingIssue() throws PendingIssueExp;
 
     Long getAllPendingIssueCount() throws PendingIssueExp;
->>>>>>> eb9e82671abeb4beb2fd08a44d53e7e22e8439c8
 
+
+    Operator addOperator(Operator newOperator);
+
+    Operator updateOperator(Operator operator);
+
+    Operator deleteOperatorById(Long id);
 }

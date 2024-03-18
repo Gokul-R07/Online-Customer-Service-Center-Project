@@ -21,6 +21,5 @@ public class AdminRegistrationDto {
 
     public Object getName() {
         return null;
-        return null;
     }
 }

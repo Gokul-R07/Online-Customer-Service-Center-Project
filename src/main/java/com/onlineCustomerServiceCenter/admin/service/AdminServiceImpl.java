@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public abstract class AdminServiceImpl implements AdminService {
 
     private final List<Admin> adminList = new ArrayList<>();
 
