@@ -14,5 +14,6 @@ public interface CustomerService {
     List<Customer> getAllCustomers() throws CustomerNotFoundException;
     Customer getCustomerByEmail(String customerEmail) throws CustomerNotFoundException;
     Customer deleteCustomerByEmail(String email) throws CustomerDeleteException;
+
 }
 
