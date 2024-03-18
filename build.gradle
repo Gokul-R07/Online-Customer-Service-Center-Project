@@ -16,9 +16,9 @@ repositories {
 }
 
 dependencies {
-	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
@@ -26,8 +26,19 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+<<<<<<< HEAD
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor'org.projectlombok:lombok'
+=======
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+>>>>>>> eb9e82671abeb4beb2fd08a44d53e7e22e8439c8
 
 
 }

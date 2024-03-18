@@ -30,6 +30,9 @@ public class Solution {
         this.solutionDescription = solutionDescription;
     }
 
+    public Solution(String solutionDescription, Integer operatorId) {
+    }
+
     public Integer getSolutionId() {
         return solutionId;
     }

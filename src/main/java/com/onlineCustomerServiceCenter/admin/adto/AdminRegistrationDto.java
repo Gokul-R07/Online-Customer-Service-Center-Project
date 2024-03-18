@@ -18,4 +18,9 @@ public class AdminRegistrationDto {
 
     public AdminRegistrationDto() {
     }
+
+    public Object getName() {
+        return null;
+        return null;
+    }
 }

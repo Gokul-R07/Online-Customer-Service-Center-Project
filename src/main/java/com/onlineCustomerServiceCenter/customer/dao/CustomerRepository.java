@@ -1,5 +1,6 @@
-package com.onlineCustomerServiceCenter.customer;
+package com.onlineCustomerServiceCenter.customer.dao;
 
+import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

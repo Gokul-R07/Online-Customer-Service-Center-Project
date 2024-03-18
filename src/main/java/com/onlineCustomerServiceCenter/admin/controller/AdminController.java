@@ -3,9 +3,9 @@ package com.onlineCustomerServiceCenter.admin.controller;
 import com.onlineCustomerServiceCenter.admin.adto.AdminLoginDto;
 import com.onlineCustomerServiceCenter.admin.adto.AdminRegistrationDto;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
-import com.onlineCustomerServiceCenter.admin.service.AdminService;
+import com.onlineCustomerServiceCenter.admin.repository.AdminRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.service.OperatorService;
+import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,60 +16,47 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     @Autowired
-    private AdminService adminService;
+    private AdminRepository adminRepository;
 
-    // Admin login endpoint
+    @Autowired
+    private OperatorRepository operatorRepository;
+
     @PostMapping("/login")
     public ResponseEntity<String> adminLogin(@RequestBody AdminLoginDto adminLoginDto) {
-        String loginResult = OperatorService.loginOperator(adminLoginDto.getEmail(), adminLoginDto.getPassword());
-        return new ResponseEntity<>(loginResult, HttpStatus.OK);
+        com.onlineCustomerServiceCenter.admin.model.Admin admin = adminRepository.findByEmailAndPassword(adminLoginDto.getEmail(), adminLoginDto.getPassword());
+        if (admin != null) {
+            return new ResponseEntity<>("Admin logged in successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    // Register a new admin endpoint
     @PostMapping("/register")
     public ResponseEntity<String> registerAdmin(@RequestBody AdminRegistrationDto adminRegistrationDto) {
-        Admin registrationSuccess = adminService.registerAdmin(adminRegistrationDto);
-
-        ResponseEntity<String> stringResponseEntity;
-        // Assuming this is how you define registration success
-        boolean registrationSuccess = true;
-        if (registrationSuccess) {
-            stringResponseEntity = new ResponseEntity<>("Admin registration successful", HttpStatus.CREATED);
-        } else {
-            stringResponseEntity = new ResponseEntity<>("Admin registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        ResponseEntity<String> response = stringResponseEntity;
-        return response;
-
-
+        Admin newAdmin = new Admin(adminRegistrationDto.getName(), adminRegistrationDto.getEmail(), adminRegistrationDto.getPassword());
+        adminRepository.save(newAdmin);
+        return new ResponseEntity<>("Admin registration successful", HttpStatus.CREATED);
     }
 
-    // Add a new operator endpoint
     @PostMapping("/operators/add")
     public ResponseEntity<Operator> addOperator(@RequestBody Operator operator) {
-        Operator addedOperator = OperatorService.updateOperatorProfile(operator);
-        return new ResponseEntity<>(addedOperator, HttpStatus.CREATED);
+        Operator newOperator = operatorRepository.save(operator);
+        return new ResponseEntity<>(newOperator, HttpStatus.CREATED);
     }
 
-    // Update an existing operator endpoint
     @PutMapping("/operators/update")
     public ResponseEntity<Operator> updateOperator(@RequestBody Operator operator) {
-        Operator updatedOperator = OperatorService.updateOperatorProfile(operator);
+        Operator updatedOperator = operatorRepository.save(operator);
         return new ResponseEntity<>(updatedOperator, HttpStatus.OK);
     }
 
-    // Delete an operator by operator ID endpoint
     @DeleteMapping("/operators/delete/{optId}")
-    public ResponseEntity<Void> deleteOperator(@PathVariable Integer optId) {
-        boolean deletionSuccessful = OperatorService.deleteOperator(optId);
-        if (deletionSuccessful) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // or HttpStatus.INTERNAL_SERVER_ERROR based on the scenario
-        }
+    public ResponseEntity<Void> deleteOperator(@PathVariable Long optId) {
+        operatorRepository.deleteById(Math.toIntExact(optId));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
+
 
 
 
