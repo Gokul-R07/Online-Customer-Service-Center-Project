@@ -7,9 +7,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +18,18 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer customerId;
-    @NotNull(message = "customer name cannot be null")
-    @NotBlank(message = "customer name cannot be blank ")
-    private String name;
 
+    @NotNull(message = "customer first name cannot be null")
+    @NotBlank(message = "customer first name cannot be blank ")
+    private String firstName;
+    @NotNull(message = "customer last name cannot be null")
+    @NotBlank(message = "customer last name cannot be blank ")
+    private String lastName;
     @NotNull(message = "customer email cannot be null")
     @NotBlank(message = "customer email cannot be blank")
     @Email(message="email is not in correct format, Eg. ford@gmail.com")
@@ -42,12 +45,13 @@ public class Customer {
     @NotBlank(message = "customer name cannot be null")
     @Pattern(regexp="^\\d{10}$", message="phone number should contain 10 digit")
     private String phoneNumber;
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     private List<Issue> issues = new ArrayList<>();
 
-    public Customer(String name, String email, String password, String city, String phoneNumber) {
-        this.name = name;
+
+    public Customer(String firstName, String lastName , String email, String password, String city, String phoneNumber) {
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.email = email;
         this.password = password;
         this.city = city;

@@ -21,12 +21,12 @@ public class Solution {
     public Solution(String solutionDescription, Integer operatorId) {
         this.solutionDescription = solutionDescription;
         this.operatorId = operatorId;
+        this.isSolutionAccepted = false;
     }
 
     public Solution(String solutionDescription) {
         this.solutionDescription = solutionDescription;
     }
-
 
     public Solution() {
 

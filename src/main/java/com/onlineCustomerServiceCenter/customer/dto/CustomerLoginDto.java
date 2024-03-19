@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class CustomerLoginDto {
-    private String customerEmail;
-    private String customerPassword;
+    private String email;
+    private String password;
 }
 
 

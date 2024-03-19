@@ -5,9 +5,10 @@ import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
-import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
+import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
 import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
@@ -39,10 +40,10 @@ public class OperatorServiceImpl implements OperatorService {
 
 
     @Override
-    public String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-        if (email == null) {
+    public Operator loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+        if(email==null ){
             throw new NullException("Email cannot be null");
-        } else if (password == null) {
+        } else if (password==null) {
             throw new NullException("Password cannot be null");
         }
 
@@ -51,19 +52,19 @@ public class OperatorServiceImpl implements OperatorService {
         if (operatorOptional.isPresent()) {
             Operator operator = operatorOptional.get();
             if (operator.getPassword().equals(password)) {
-                return "Login successful";
+                return operator;
             } else {
                 throw new IncorrectPasswordException("Incorrect password");
             }
         } else {
-            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
+            throw new OperatorNotFoundException("Operator not found");
         }
     }
 
     @Override
     public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         if(email==null){
-            throw new NullException("Operator Email cannot be null");
+            throw new NullException("Operator Id cannot be null");
         }
 
         else if (oldPassword==null) {
@@ -83,7 +84,7 @@ public class OperatorServiceImpl implements OperatorService {
             return "Password changed successfully";
         }
         else{
-            throw new OperatorNotFoundException("Operator not found for given email id: "+email);
+            throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
         }
 
     }
@@ -115,19 +116,20 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public List<Issue> getAllAllocatedIssue() {
+    public List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp {
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            log.info("There are no issues allocated");
+            throw new AllocatedIssueExp("there are no allocated issues");
         }
         return this.issueRepository.findAll();
+
     }
 
     @Override
-    public Long getAllAllocatedIssueCount() {
+    public Long getAllAllocatedIssueCount() throws AllocatedIssueExp{
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
-            log.info("There are no issues allocated");
+            throw new AllocatedIssueExp("Issues are not present");
         }
         return this.issueRepository.count();
     }
@@ -135,19 +137,20 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) {
-        Optional<Operator> operatorIdOptional = this.operatorRepository.findById(operatorid);
+        Optional<Operator> operatorIdOptional= this.operatorRepository.findById(operatorid);
         List<Issue> pendIssues = new ArrayList<>();
-        if (operatorIdOptional.isEmpty()) {
+        if(operatorIdOptional.isEmpty()) {
             return Collections.emptyList();
 
-        } else {
-            for (Issue issue : operatorIdOptional.get().getCustomerIssues()) {
-                if (issue.getIssueStatus().equals("pending")) {
-                    pendIssues.add(issue);
-                }
-
+    }
+    else{
+        for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
+            if(issue.getIssueStatus().equals("pending")){
+                pendIssues.add(issue);
             }
+
         }
+    }
         return pendIssues;
     }
 
@@ -195,7 +198,12 @@ public class OperatorServiceImpl implements OperatorService {
         else{
             return issueCounter.stream().count();
         }
+
+    }
+
+    @Override
+    public Operator getOperatorDetailsById(Integer operatorId) {
+        return this.operatorRepository.findById(operatorId).get();
     }
 
 }
-

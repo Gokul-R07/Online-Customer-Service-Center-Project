@@ -11,8 +11,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@CrossOrigin(origins ="http://localhost:4200/")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -26,12 +27,12 @@ public class CustomerController {
     }
 
     @PostMapping("login/customer")
-    public Customer loginCustomer(@Valid @RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
-        return this.customerService.loginCustomer(loginDto.getCustomerEmail(), loginDto.getCustomerPassword());
+    public Customer loginCustomer(@RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
+        return this.customerService.loginCustomer(loginDto.getEmail(), loginDto.getPassword());
     }
 
     @PutMapping("update/customer")
-    public Customer updateCustomerProfile(@Valid @RequestBody Customer customer) throws CustomerUpdateException {
+    public Customer updateCustomerProfile(@RequestBody Customer customer) throws CustomerUpdateException {
         return this.customerService.updateCustomer(customer);
     }
 
@@ -40,14 +41,14 @@ public class CustomerController {
         return this.customerService.getAllCustomers();
     }
 
-    @GetMapping("customer/{id}")
-    public Customer getCustomerById(@PathVariable Integer id) throws CustomerNotFoundException{
-        return this.customerService.getCustomerById(id);
+    @GetMapping("customer/{email}")
+    public Customer getCustomerByEmail(@PathVariable String email) throws CustomerNotFoundException{
+        return this.customerService.getCustomerByEmail(email);
     }
 
-    @DeleteMapping("customer/{id}")
-    public Customer deleteCustomerById(@PathVariable Integer id) throws CustomerDeleteException {
-        return this.customerService.deleteCustomerById(id);
+    @DeleteMapping("customer/{email}")
+    public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
+        return this.customerService.deleteCustomerByEmail(email);
     }
     @PatchMapping("customer")
     public Solution acceptSolution(@RequestParam Integer solutionId) throws SolutionException{

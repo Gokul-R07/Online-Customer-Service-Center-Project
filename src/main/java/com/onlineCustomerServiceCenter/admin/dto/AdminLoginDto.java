@@ -1,4 +1,4 @@
-package com.onlineCustomerServiceCenter.admin.adto;
+package com.onlineCustomerServiceCenter.admin.dto;
 
 public class AdminLoginDto {
     private String email;

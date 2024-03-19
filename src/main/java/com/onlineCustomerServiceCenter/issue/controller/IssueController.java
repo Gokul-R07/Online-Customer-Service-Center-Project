@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @CrossOrigin(origins ="http://localhost:4200/")
 public class IssueController {
@@ -29,7 +30,7 @@ public class IssueController {
 
     @Autowired
     private IssueService issueService
-;
+            ;
 
     @PostMapping("issue/{customerId}")
     public Customer addIssueToCustomer(@PathVariable Integer customerId,@RequestBody Issue newIssue ) throws CustomerNotFoundException, CustomerRegisterException {
@@ -38,14 +39,14 @@ public class IssueController {
 
 
     @PutMapping("issue/update/{customerId}/{issueId}")
-    public Customer updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody Issue issue) throws IssueNotFoundException, CustomerRegisterException {
-        return this.issueService.updateIssueDescById(customerId, issueId, issue);
+    public Issue updateIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId, @RequestBody String issueDescription) throws IssueNotFoundException, CustomerRegisterException, CustomerNotFoundException {
+        return this.issueService.updateIssueDescriptionById(customerId, issueId, issueDescription);
 
     }
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public Customer deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException {
-        return this.issueService.deleteIssueById(customerId, issueId);
+    public String deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
+        return this.issueService.deleteIssueFromCustomer(customerId, issueId);
     }
 
 
