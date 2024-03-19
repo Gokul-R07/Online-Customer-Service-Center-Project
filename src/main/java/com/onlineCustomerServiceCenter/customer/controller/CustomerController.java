@@ -51,8 +51,8 @@ public class CustomerController {
         return this.customerService.deleteCustomerByEmail(email);
     }
     @PatchMapping("customer")
-    public Solution acceptSolution(@RequestParam Integer solutionId) throws SolutionException{
-         return this.solutionService.acceptSolution(solutionId);
+    public String acceptSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
+         return this.solutionService.acceptSolution(issueId,solutionId);
     }
 }
 
