@@ -8,6 +8,7 @@ import com.onlineCustomerServiceCenter.admin.exceptions.AdminLoginException;
 import com.onlineCustomerServiceCenter.admin.exceptions.AdminRegistrationException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
+import com.onlineCustomerServiceCenter.operator.exceptions.OperatorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,23 +71,19 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Operator updateOperator(Operator operator) {
         Optional<Operator> existingOperator = null;
-        Operator operator1 = new Operator();
+        Operator updatedOperator = new Operator();
         try {
             existingOperator = operatorRepository.findById(operator.getOperatorId());
-            if(existingOperator.isPresent()) {
-                operator1.setFirstName(operator.getName());
-                operator1.setEmail(operator.getEmail());
-                operator1.setPhoneNumber(operator.getPhoneNumber());
+            if (existingOperator.isEmpty()) {
+                throw new OperatorNotFoundException("Operator not found");
             }
-
+            updatedOperator.setFirstName(operator.getName());
+            updatedOperator.setEmail(operator.getEmail());
+            updatedOperator.setPhoneNumber(operator.getPhoneNumber());
+            operatorRepository.save(updatedOperator);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
-        // Update the existing operator with new details
-
-
-        return operatorRepository.save(operator1);
+        return updatedOperator;
     }
 }
