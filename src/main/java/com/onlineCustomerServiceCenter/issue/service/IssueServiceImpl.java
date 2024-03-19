@@ -88,7 +88,7 @@ public class IssueServiceImpl implements IssueService {
         else{
             throw new CustomerNotFoundException("No user found with the customerId");
         }
-        return customer;
+        return this.customerRepository.findById(customerId).get();
     }
 
     @Override

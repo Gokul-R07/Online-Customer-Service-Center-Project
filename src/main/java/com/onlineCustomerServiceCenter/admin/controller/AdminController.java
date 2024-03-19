@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
-     @Autowired
+    @Autowired
     private  AdminService adminService;
     @Autowired
     private  OperatorService operatorService;
@@ -39,12 +39,11 @@ public class AdminController {
 
     @PutMapping("operator/update")
     public Operator updateOperator(@RequestBody Operator operator) {
-        return operatorService.updateOperator(operator);
+        return adminService.updateOperator(operator);
     }
 
     @DeleteMapping("operator/{id}")
-    public Operator deleteOperatorById(@PathVariable Long id)  {
-        return operatorService.deleteOperatorById(id);
+    public Operator deleteOperatorById(@PathVariable int id)  {
+        return adminService.deleteOperator(id);
     }
 }
-

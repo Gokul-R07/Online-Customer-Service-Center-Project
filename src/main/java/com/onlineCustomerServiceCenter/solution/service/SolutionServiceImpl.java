@@ -1,5 +1,7 @@
 package com.onlineCustomerServiceCenter.solution.service;
 
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
@@ -15,6 +17,8 @@ public class SolutionServiceImpl implements SolutionService {
 
     @Autowired
     private SolutionRepository solutionRepository;
+    @Autowired
+    private IssueRepository issueRepository;
 
     @Override
     public Solution createSolution(String solutionDescription) throws SolutionException {
@@ -28,7 +32,7 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public Solution acceptSolution(Integer solutionId) throws SolutionException {
+    public String acceptSolution(Integer issueId,  Integer  solutionId) throws SolutionException {
         if (solutionId==null){
             throw new SolutionException("Solution Id cannot be null");
         }
@@ -36,8 +40,14 @@ public class SolutionServiceImpl implements SolutionService {
         Optional<Solution> foundSolution= this.solutionRepository.findById(solutionId);
         if(foundSolution.isPresent()){
             Solution solution=foundSolution.get();
-            solution.setSolutionAccepted(true);
-            return this.solutionRepository.save(solution);
+            solution.setIsSolutionAccepted(true);
+            this.solutionRepository.save(solution);
+            Optional<Issue> issueOptional=this.issueRepository.findById(issueId);
+            if(issueOptional.isPresent()){
+                Issue issue=issueOptional.get();
+                issue.setTicketClose(true);
+            }
+            return "Solution Accepted";
         }
         return null;
     }

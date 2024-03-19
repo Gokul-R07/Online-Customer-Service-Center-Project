@@ -54,11 +54,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Operator deleteOperator(int operatorId) {
 
-            Optional<Operator> operatorOpt = this.operatorRepository.findById(operatorId);
-            this.operatorRepository.deleteById(operatorOpt.get().getOperatorId());
-            Operator operatorToBeDeleted= operatorOpt.get();
-            return  operatorToBeDeleted;
-        }
+        Optional<Operator> operatorOpt = this.operatorRepository.findById(operatorId);
+        this.operatorRepository.deleteById(operatorOpt.get().getOperatorId());
+        Operator operatorToBeDeleted= operatorOpt.get();
+        return  operatorToBeDeleted;
+    }
 
 
 
@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
             if (existingOperator.isEmpty()) {
                 throw new OperatorNotFoundException("Operator not found");
             }
-            updatedOperator.setFirstName(operator.getName());
+            updatedOperator.setFirstName(operator.getFirstName());
             updatedOperator.setEmail(operator.getEmail());
             updatedOperator.setPhoneNumber(operator.getPhoneNumber());
             operatorRepository.save(updatedOperator);

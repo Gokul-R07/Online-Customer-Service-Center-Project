@@ -1,11 +1,11 @@
 package com.onlineCustomerServiceCenter.operator.service;
 
-import com.onlineCustomerServiceCenter.admin.exceptions.SolutionException;
-import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
-import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
+import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
@@ -40,7 +40,7 @@ public class OperatorServiceImpl implements OperatorService {
 
 
     @Override
-    public String loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+    public Operator loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         if(email==null ){
             throw new NullException("Email cannot be null");
         } else if (password==null) {
@@ -52,7 +52,7 @@ public class OperatorServiceImpl implements OperatorService {
         if (operatorOptional.isPresent()) {
             Operator operator = operatorOptional.get();
             if (operator.getPassword().equals(password)) {
-                return "Login successful";
+                return operator;
             } else {
                 throw new IncorrectPasswordException("Incorrect password");
             }
@@ -87,16 +87,6 @@ public class OperatorServiceImpl implements OperatorService {
             throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
         }
 
-    }
-
-    @Override
-    public Operator updateOperatorProfile(Operator updatedoperator) {
-        return null;
-    }
-
-    @Override
-    public Issue addIssueSolution(Integer issueId, String solutionDescription) throws SolutionException, IssueNotFoundException {
-        return null;
     }
 
 
@@ -212,18 +202,8 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public Operator addOperator(Operator newOperator) {
-        return null;
-    }
-
-    @Override
-    public Operator updateOperator(Operator operator) {
-        return null;
-    }
-
-    @Override
-    public Operator deleteOperatorById(Long id) {
-        return null;
+    public Operator getOperatorDetailsById(Integer operatorId) {
+        return this.operatorRepository.findById(operatorId).get();
     }
 
 }
