@@ -81,9 +81,7 @@ public class IssueServiceImpl implements IssueService {
             List<Issue> issueList=customer.getIssues();
             issueList.add(newIssue);
             customer.setIssues(issueList);
-            System.out.print(newIssue);
-            Issue savedIssue= this.issueRepository.save(newIssue);
-            System.out.print(savedIssue);
+            this.issueRepository.save(newIssue);
             this.customerRepository.save(customer);
 
         }

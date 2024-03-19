@@ -201,4 +201,9 @@ public class OperatorServiceImpl implements OperatorService {
 
     }
 
+    @Override
+    public Operator getOperatorDetailsById(Integer operatorId) {
+        return this.operatorRepository.findById(operatorId).get();
+    }
+
 }

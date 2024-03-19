@@ -3,6 +3,7 @@ package com.onlineCustomerServiceCenter.admin.service;
 import com.onlineCustomerServiceCenter.admin.dto.AdminLoginDto;
 import com.onlineCustomerServiceCenter.admin.dto.AdminRegistrationDto;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 
 public interface AdminService {
@@ -12,4 +13,6 @@ public interface AdminService {
     Admin loginAdmin(String email, String password);
 
     Operator registerOperator(Operator newOperator);
+
+    String allocateIssueToOperator(Issue neweIsuue);
 }

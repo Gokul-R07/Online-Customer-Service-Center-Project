@@ -35,16 +35,20 @@ public class OperatorController {
     public String changePassword(@RequestBody PasswordDto passwordDto) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
                 return this.operatorService.changePassword(passwordDto.getEmail(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
     }
+
     @PostMapping("operator/solution")
     public String addIssueSolution(@RequestBody IssueSolutionDto issueSolutionDto) throws IssueNotFoundException, NullException {
         return this.operatorService.addIssueSolution(issueSolutionDto.getIssueId(), issueSolutionDto.getSolutionDescription(), issueSolutionDto.getOperatorId());
     }
-
+  @GetMapping("operator")
+    public Operator getOperatorDetailsById(@RequestParam Integer operatorId) {
+        return this.operatorService.getOperatorDetailsById(operatorId);
+    }
 
 
 
     @GetMapping("/pending-issue-by-id")
-    public List<Issue> getAllPendingIssue(@RequestBody Integer operatorid){
+    public List<Issue> getAllPendingIssue(@RequestParam Integer operatorid){
         try{
             return operatorService.getAllPendingIssueByOperatorId(operatorid);
 

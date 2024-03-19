@@ -2,6 +2,7 @@ package com.onlineCustomerServiceCenter.admin.controller;
 
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
 import com.onlineCustomerServiceCenter.admin.service.AdminService;
+import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,9 @@ public class AdminController {
     @PostMapping("/operator/register")
     public Operator registerOperator(@RequestBody Operator newOperator) {
         return adminService.registerOperator(newOperator);
+    }
+    @PostMapping("/allocate Issue")
+    public String allocateIssueToOperator(@RequestBody Issue neweIsuue) {
+        return adminService.allocateIssueToOperator(neweIsuue);
     }
 }

@@ -29,4 +29,6 @@ public interface OperatorService {
 
     Long getAllPendingIssueCount() throws PendingIssueExp;
 
+    Operator getOperatorDetailsById(Integer operatorId);
+
 }
