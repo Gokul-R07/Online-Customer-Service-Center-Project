@@ -71,6 +71,8 @@ public class IssueServiceImpl implements IssueService {
         issueToUpdate.setIssueDescription(newDesc);
         issueToUpdate.setIssueUpdatedDate(LocalDate.now());
 
+
+
 // Save the changes to persist the updated issue description
         issueRepository.save(issueToUpdate);
         return issueToUpdate;

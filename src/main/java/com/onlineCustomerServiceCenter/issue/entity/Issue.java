@@ -32,7 +32,7 @@ public class Issue {
     private LocalDate issueCreationDate;
     private LocalDate issueUpdatedDate;
     private Boolean ticketClose;
-    private String issueStatus;
+    private IssueStatus issueStatus;
 
     @Size(min = 10, max = 50, message = "The Issue Description must be between 10 and 50 characters")
     private String issueDescription;
@@ -47,10 +47,14 @@ public class Issue {
         this.issueType = issueType;
         this.issueCreationDate = LocalDate.now();
         this.issueUpdatedDate = null;
-        this.issueStatus = "Unsolved";
+        this.issueStatus = IssueStatus.PENDING;
         this.issueDescription = issueDescription;
         this.ticketClose = false;
         this.solutions = null;
+    }
+
+    public void updateIssueStatus(IssueStatus newStatus){
+        this.issueStatus = newStatus;
     }
 
 }

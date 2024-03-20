@@ -1,11 +1,8 @@
 package com.onlineCustomerServiceCenter.issue.controller;
 
-import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
-import com.onlineCustomerServiceCenter.customer.service.CustomerService;
-import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
@@ -18,15 +15,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200/")
 public class IssueController {
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private IssueRepository issueRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Autowired
     private IssueService issueService
@@ -46,10 +34,7 @@ public class IssueController {
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
     public Issue deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
-        Issue deletedIssue = this.issueService.deleteIssueFromCustomer(customerId, issueId);
-
-        // Create the ResponseEntity with the deleted Issue and appropriate status
-        return deletedIssue;
+       return this.issueService.deleteIssueFromCustomer(customerId, issueId);
     }
 
 
