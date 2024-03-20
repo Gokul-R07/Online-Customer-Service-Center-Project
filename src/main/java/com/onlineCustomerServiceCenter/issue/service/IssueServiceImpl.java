@@ -108,18 +108,35 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public String deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
+    public Issue deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id: " + customerId));
 
-        boolean isRemoved = customer.getIssues().removeIf(issue -> issue.getIssueId().equals(issueId));
-        if (!isRemoved) {
-            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
-        } else {
+        Optional<Issue> issueOptional = customer.getIssues().stream()
+                .filter(issue -> issue.getIssueId().equals(issueId))
+                .findFirst();
+
+        if (issueOptional.isPresent()) {
+            Issue deletedIssue = issueOptional.get();
+            customer.getIssues().remove(deletedIssue);
             customerRepository.save(customer);
             issueRepository.deleteById(issueId);
-            return "Deletion success";
+            return deletedIssue;
+        } else {
+            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
         }
     }
+
+    @Override
+    public Issue getIssueByIssueId(Integer issueId) throws IssueNotFoundException {
+        Optional<Issue> issueOptional = issueRepository.findById(issueId);
+
+        if (issueOptional.isPresent()) {
+            return issueOptional.get();
+        } else {
+            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
+        }
+    }
+
 
 }

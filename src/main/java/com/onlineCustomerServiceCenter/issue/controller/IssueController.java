@@ -45,8 +45,11 @@ public class IssueController {
     }
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public String deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
-        return this.issueService.deleteIssueFromCustomer(customerId, issueId);
+    public Issue deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
+        Issue deletedIssue = this.issueService.deleteIssueFromCustomer(customerId, issueId);
+
+        // Create the ResponseEntity with the deleted Issue and appropriate status
+        return deletedIssue;
     }
 
 
@@ -55,9 +58,15 @@ public class IssueController {
         return this.issueService.getAllIssuesByCustomerId(customerId);
     }
 
+
     @GetMapping("issues")
     public List<Issue> getAllIssue() throws NullIssueException {
         return this.issueService.getAllIssues();
+    }
+
+    @GetMapping("issue/{issueId}")
+    public Issue getIssueById(@PathVariable Integer issueId) throws IssueNotFoundException {
+        return this.issueService.getIssueById(issueId);
     }
 
 
