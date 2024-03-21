@@ -53,8 +53,6 @@ public class Issue {
         this.solutions = null;
     }
 
-    public void updateIssueStatus(IssueStatus newStatus){
-        this.issueStatus = newStatus;
-    }
+
 
 }
