@@ -3,18 +3,25 @@ package com.onlineCustomerServiceCenter.issue.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 //import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+//@Data
 @Entity
 @Data
+//@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
 
@@ -25,7 +32,7 @@ public class Issue {
     private LocalDate issueCreationDate;
     private LocalDate issueUpdatedDate;
     private Boolean ticketClose;
-    private String issueStatus;
+    private IssueStatus issueStatus;
 
     @Size(min = 10, max = 50, message = "The Issue Description must be between 10 and 50 characters")
     private String issueDescription;
@@ -40,10 +47,14 @@ public class Issue {
         this.issueType = issueType;
         this.issueCreationDate = LocalDate.now();
         this.issueUpdatedDate = null;
-        this.issueStatus = "pending";
+        this.issueStatus = IssueStatus.PENDING;
         this.issueDescription = issueDescription;
         this.ticketClose = false;
         this.solutions = null;
+    }
+
+    public void updateIssueStatus(IssueStatus newStatus){
+        this.issueStatus = newStatus;
     }
 
 }

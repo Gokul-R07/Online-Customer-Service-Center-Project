@@ -6,6 +6,7 @@ import com.onlineCustomerServiceCenter.customer.service.CustomerService;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,8 @@ public class IssueTest {
             this.issueService.addIssueToCustomer(customer.getCustomerId(), issue);
             Assertions.assertNotNull(this.issueService.getAllIssues());
         } catch (CustomerNotFoundException | CustomerRegisterException e) {
+            throw new RuntimeException(e);
+        } catch (NullIssueException e) {
             throw new RuntimeException(e);
         }
     }

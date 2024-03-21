@@ -6,6 +6,7 @@ import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundExcep
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,12 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> getAllIssues() {
-        return this.issueRepository.findAll();
+    public List<Issue> getAllIssues() throws NullIssueException {
+        List<Issue> issuesOptioal=this.issueRepository.findAll();
+        if(issuesOptioal.isEmpty())
+            throw new NullIssueException("No issue exit in the List");
+
+        return issuesOptioal;
     }
 
     @Override
@@ -65,6 +70,8 @@ public class IssueServiceImpl implements IssueService {
 // Update the issue description
         issueToUpdate.setIssueDescription(newDesc);
         issueToUpdate.setIssueUpdatedDate(LocalDate.now());
+
+
 
 // Save the changes to persist the updated issue description
         issueRepository.save(issueToUpdate);
@@ -103,18 +110,35 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public String deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
+    public Issue deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id: " + customerId));
 
-        boolean isRemoved = customer.getIssues().removeIf(issue -> issue.getIssueId().equals(issueId));
-        if (!isRemoved) {
-            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
-        } else {
+        Optional<Issue> issueOptional = customer.getIssues().stream()
+                .filter(issue -> issue.getIssueId().equals(issueId))
+                .findFirst();
+
+        if (issueOptional.isPresent()) {
+            Issue deletedIssue = issueOptional.get();
+            customer.getIssues().remove(deletedIssue);
             customerRepository.save(customer);
             issueRepository.deleteById(issueId);
-            return "Deletion success";
+            return deletedIssue;
+        } else {
+            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
         }
     }
+
+    @Override
+    public Issue getIssueByIssueId(Integer issueId) throws IssueNotFoundException {
+        Optional<Issue> issueOptional = issueRepository.findById(issueId);
+
+        if (issueOptional.isPresent()) {
+            return issueOptional.get();
+        } else {
+            throw new IssueNotFoundException("Issue not found with given id: " + issueId);
+        }
+    }
+
 
 }

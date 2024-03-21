@@ -1,13 +1,11 @@
 package com.onlineCustomerServiceCenter.issue.controller;
 
-import com.onlineCustomerServiceCenter.customer.dao.CustomerRepository;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerNotFoundException;
 import com.onlineCustomerServiceCenter.customer.exceptions.CustomerRegisterException;
-import com.onlineCustomerServiceCenter.customer.service.CustomerService;
-import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +14,8 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200/")
 public class IssueController {
-
-    @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private IssueRepository issueRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Autowired
     private IssueService issueService
@@ -44,8 +34,8 @@ public class IssueController {
     }
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public String deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
-        return this.issueService.deleteIssueFromCustomer(customerId, issueId);
+    public Issue deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
+       return this.issueService.deleteIssueFromCustomer(customerId, issueId);
     }
 
 
@@ -54,9 +44,15 @@ public class IssueController {
         return this.issueService.getAllIssuesByCustomerId(customerId);
     }
 
+
     @GetMapping("issues")
-    public List<Issue> getAllIssue(){
+    public List<Issue> getAllIssue() throws NullIssueException {
         return this.issueService.getAllIssues();
+    }
+
+    @GetMapping("issue/{issueId}")
+    public Issue getIssueById(@PathVariable Integer issueId) throws IssueNotFoundException {
+        return this.issueService.getIssueById(issueId);
     }
 
 
