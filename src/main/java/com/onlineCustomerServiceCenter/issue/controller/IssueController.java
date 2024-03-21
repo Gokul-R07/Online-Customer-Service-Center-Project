@@ -14,7 +14,6 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
 public class IssueController {
 
     @Autowired

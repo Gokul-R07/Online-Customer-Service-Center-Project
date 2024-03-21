@@ -121,8 +121,10 @@ public class IssueServiceImpl implements IssueService {
         if (issueOptional.isPresent()) {
             Issue deletedIssue = issueOptional.get();
             customer.getIssues().remove(deletedIssue);
-            customerRepository.save(customer);
             issueRepository.deleteById(issueId);
+
+            customerRepository.save(customer);
+
             return deletedIssue;
         } else {
             throw new IssueNotFoundException("Issue not found with given id: " + issueId);
