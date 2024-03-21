@@ -2,6 +2,7 @@ package com.onlineCustomerServiceCenter.operator.service;
 
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
+import com.onlineCustomerServiceCenter.issue.entity.IssueStatus;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
@@ -106,7 +107,9 @@ public class OperatorServiceImpl implements OperatorService {
              Solution savedSolution= this.solutionRepository.save(solution);
              Issue issue=issueOptional.get();
              issue.getSolutions().add(savedSolution);
+             issue.setIssueStatus(IssueStatus.SOLVED);
              this.issueRepository.save(issue);
+
              return "Solution saved successfully";
          }else{
              throw new IssueNotFoundException("No Issue found with given issue id:"+ issueId);

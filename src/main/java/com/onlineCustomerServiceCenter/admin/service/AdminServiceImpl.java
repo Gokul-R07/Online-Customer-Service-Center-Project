@@ -4,7 +4,9 @@ import com.onlineCustomerServiceCenter.admin.dao.AdminRepository;
 import com.onlineCustomerServiceCenter.admin.dto.AdminLoginDto;
 import com.onlineCustomerServiceCenter.admin.dto.AdminRegistrationDto;
 import com.onlineCustomerServiceCenter.admin.entity.Admin;
+import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.issue.entity.IssueStatus;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class AdminServiceImpl implements AdminService {
     private AdminRepository adminRepository;
     @Autowired
     private OperatorRepository operatorRepository;
-
+    @Autowired
+    private IssueRepository issueRepository;
     @Override
     public Admin registerAdmin(Admin newAdmin) {
         return adminRepository.save(newAdmin);
@@ -45,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
         operators.sort(Comparator.comparingLong(o -> o.getCustomerIssues().size()));
         operators.sort(Comparator.comparingLong(o -> o.getCustomerIssues()
                 .stream()
-                .filter(issue -> issue.getIssueStatus().equals("pending"))
+                .filter(issue -> issue.getIssueStatus().equals(IssueStatus.PENDING))
                 .count()));
 
         Operator selectedOperator = operators.get(0); // Get the operator with the least allocated and pending issues
@@ -54,7 +57,10 @@ public class AdminServiceImpl implements AdminService {
         // Allocate the new issue to the selected operator
         operatorIssues.add(newIssue);
         selectedOperator.setCustomerIssues(operatorIssues);
-        operatorRepository.save(selectedOperator);
+        this.operatorRepository.save(selectedOperator);
+        newIssue.setIssueStatus(IssueStatus.INPROGRESS);
+        this.issueRepository.save(newIssue);
+
 
         return "New issue allocated to Operator with ID: " + selectedOperator.getOperatorId();
     }

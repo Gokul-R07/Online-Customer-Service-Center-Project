@@ -2,6 +2,7 @@ package com.onlineCustomerServiceCenter.solution.service;
 
 import com.onlineCustomerServiceCenter.issue.dao.IssueRepository;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
+import com.onlineCustomerServiceCenter.issue.entity.IssueStatus;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
@@ -37,18 +38,35 @@ public class SolutionServiceImpl implements SolutionService {
             throw new SolutionException("Solution Id cannot be null");
         }
 
-        Optional<Solution> foundSolution= this.solutionRepository.findById(solutionId);
-        if(foundSolution.isPresent()){
-            Solution solution=foundSolution.get();
+        Optional<Solution> solutionOptional= this.solutionRepository.findById(solutionId);
+        if(solutionOptional.isPresent()){
+            Solution solution=solutionOptional.get();
             solution.setIsSolutionAccepted(true);
             this.solutionRepository.save(solution);
             Optional<Issue> issueOptional=this.issueRepository.findById(issueId);
             if(issueOptional.isPresent()){
                 Issue issue=issueOptional.get();
                 issue.setTicketClose(true);
+                this.issueRepository.save(issue);
             }
             return "Solution Accepted";
         }
         return null;
+    }
+
+    @Override
+    public String rejectSolution(Integer issueId, Integer solutionId) throws SolutionException {
+        if (solutionId==null){
+            throw new SolutionException("Solution Id cannot be null");
+        }
+        Optional<Issue> issueOptional= this.issueRepository.findById(issueId);
+        if(issueOptional.isPresent()) {
+            Issue issue = issueOptional.get();
+            issue.setIssueStatus(IssueStatus.INPROGRESS);
+            this.issueRepository.save(issue);
+
+        }
+
+        return "Solution Rejected";
     }
 }

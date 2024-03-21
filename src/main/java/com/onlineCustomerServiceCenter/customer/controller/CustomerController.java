@@ -50,9 +50,13 @@ public class CustomerController {
     public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
         return this.customerService.deleteCustomerByEmail(email);
     }
-    @PatchMapping("customer")
+    @PatchMapping("customer/solution/accept")
     public String acceptSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
          return this.solutionService.acceptSolution(issueId,solutionId);
+    }
+    @PatchMapping("customer/solution/reject")
+    public String rejectSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
+         return this.solutionService.rejectSolution(issueId,solutionId);
     }
 }
 
