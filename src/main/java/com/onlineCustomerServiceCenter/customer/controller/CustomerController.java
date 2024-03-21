@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class CustomerController {
     @Autowired
@@ -26,7 +28,7 @@ public class CustomerController {
 
     @PostMapping("login/customer")
     public Customer loginCustomer(@RequestBody CustomerLoginDto loginDto) throws CustomerLoginException {
-        return this.customerService.loginCustomer(loginDto.getCustomerEmail(), loginDto.getCustomerPassword());
+        return this.customerService.loginCustomer(loginDto.getEmail(), loginDto.getPassword());
     }
 
     @PutMapping("update/customer")
@@ -49,8 +51,8 @@ public class CustomerController {
         return this.customerService.deleteCustomerByEmail(email);
     }
     @PatchMapping("customer")
-    public Solution acceptSolution(@RequestParam Integer solutionId) throws SolutionException{
-         return this.solutionService.acceptSolution(solutionId);
+    public String acceptSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
+         return this.solutionService.acceptSolution(issueId,solutionId);
     }
 }
 

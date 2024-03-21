@@ -35,7 +35,7 @@ public class IssueTest {
 
     @BeforeEach
     public void createCustomerIssue() {
-        customer = new Customer("karthick", "spk@gmail.com", "gf@13412", "trichy", "9756456878");
+        customer = new Customer("karthick", "S P","spk@gmail.com", "gf@13412", "trichy", "9756456878");
         issue = new Issue("software", "login failure issue");
     }
 
