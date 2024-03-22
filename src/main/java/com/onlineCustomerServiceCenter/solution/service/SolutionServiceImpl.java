@@ -5,15 +5,16 @@ import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.entity.IssueStatus;
 import com.onlineCustomerServiceCenter.solution.dao.SolutionRepository;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
+import com.onlineCustomerServiceCenter.solution.entity.SolutionIdDto;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
-import com.onlineCustomerServiceCenter.solution.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 
 import java.util.Optional;
 
 @Service
+@Component
 public class SolutionServiceImpl implements SolutionService {
 
     @Autowired
@@ -33,7 +34,7 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public String acceptSolution(Integer issueId,  Integer  solutionId) throws SolutionException {
+    public String acceptSolution(Integer issueId,  Integer solutionId) throws SolutionException {
         if (solutionId==null){
             throw new SolutionException("Solution Id cannot be null");
         }
@@ -46,6 +47,7 @@ public class SolutionServiceImpl implements SolutionService {
             Optional<Issue> issueOptional=this.issueRepository.findById(issueId);
             if(issueOptional.isPresent()){
                 Issue issue=issueOptional.get();
+                issue.setIssueStatus(IssueStatus.SOLVED);
                 issue.setTicketClose(true);
                 this.issueRepository.save(issue);
             }
