@@ -7,7 +7,7 @@ import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 public class AdminController {
 
