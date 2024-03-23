@@ -122,7 +122,7 @@ public class OperatorServiceImpl implements OperatorService {
 
     @Override
     public List<OperatorDetailsDto> getAllOperatorDetails() {
-        List<Operator> operators = this.operatorRepository.findAll();
+        List<Operator> operators = operatorRepository.findAll();
 
         return operators.stream()
                 .map(operator -> {
@@ -130,6 +130,10 @@ public class OperatorServiceImpl implements OperatorService {
                     dto.setOperatorId(operator.getOperatorId());
                     dto.setFirstName(operator.getFirstName());
                     dto.setLastName(operator.getLastName());
+                    dto.setAllocatedIssueCount(operator.getCustomerIssues().size());
+                    dto.setPendingIssueCount((int) operator.getCustomerIssues().stream()
+                            .filter(issue -> !issue.getTicketClose())
+                            .count());
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -161,7 +165,6 @@ public class OperatorServiceImpl implements OperatorService {
         List<Issue> pendIssues = new ArrayList<>();
         if(operatorIdOptional.isEmpty()) {
             return Collections.emptyList();
-
     }
     else{
         for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
