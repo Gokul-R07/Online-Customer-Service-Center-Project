@@ -180,7 +180,7 @@ public class OperatorServiceImpl implements OperatorService {
         List<Issue> pendingIssue = new ArrayList<>();
 
         for(Issue issue : issues){
-            if(issue.getIssueStatus().equals("pending")){
+            if(issue.getIssueStatus().equals("PENDING")){
                 pendingIssue.add(issue);
             }
         }

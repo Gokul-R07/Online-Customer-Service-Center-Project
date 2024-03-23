@@ -27,7 +27,7 @@ public class AdminController {
     public Operator registerOperator(@RequestBody Operator newOperator) {
         return adminService.registerOperator(newOperator);
     }
-    @PostMapping("/allocate Issue")
+    @PostMapping("/allocateIssue")
     public String allocateIssueToOperator(@RequestBody Issue neweIsuue) {
         return adminService.allocateIssueToOperator(neweIsuue);
     }
