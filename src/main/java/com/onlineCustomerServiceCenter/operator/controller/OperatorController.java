@@ -3,6 +3,7 @@ package com.onlineCustomerServiceCenter.operator.controller;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.issue.exception.NullIssueException;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorDetailsDto;
 import com.onlineCustomerServiceCenter.operator.dto.PasswordDto;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
@@ -45,6 +46,10 @@ public class OperatorController {
         return this.operatorService.getOperatorDetailsById(operatorId);
     }
 
+    @GetMapping("all-operators")
+    public List<OperatorDetailsDto> getAllOperatorDetails(){
+        return this.operatorService.getAllOperatorDetails();
+    }
 
 
     @GetMapping("/pending-issue-by-id")

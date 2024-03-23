@@ -6,6 +6,7 @@ import com.onlineCustomerServiceCenter.issue.entity.IssueStatus;
 import com.onlineCustomerServiceCenter.issue.service.IssueService;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
 import com.onlineCustomerServiceCenter.operator.dao.OperatorRepository;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorDetailsDto;
 import com.onlineCustomerServiceCenter.operator.dto.OperatorLoginDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.exceptions.AllocatedIssueExp;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -119,6 +121,21 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
+    public List<OperatorDetailsDto> getAllOperatorDetails() {
+        List<Operator> operators = this.operatorRepository.findAll();
+
+        return operators.stream()
+                .map(operator -> {
+                    OperatorDetailsDto dto = new OperatorDetailsDto();
+                    dto.setOperatorId(operator.getOperatorId());
+                    dto.setFirstName(operator.getFirstName());
+                    dto.setLastName(operator.getLastName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp {
         List<Issue> issues = this.issueRepository.findAll();
         if(issues.isEmpty()){
@@ -148,7 +165,7 @@ public class OperatorServiceImpl implements OperatorService {
     }
     else{
         for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
-            if(issue.getIssueStatus().equals("pending")){
+            if(issue.getIssueStatus().equals("PENDING")){
                 pendIssues.add(issue);
             }
 
@@ -166,7 +183,7 @@ public class OperatorServiceImpl implements OperatorService {
         }
         else{
             for(Issue issue : operator.get().getCustomerIssues()){
-                if(issue.getIssueStatus().equals("pending")){
+                if(issue.getIssueStatus().equals("PENDING")){
                     allocatedIssue.add(issue);
                 }
             }

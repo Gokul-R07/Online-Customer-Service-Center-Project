@@ -3,6 +3,7 @@ package com.onlineCustomerServiceCenter.operator.service;
 import java.util.List;
 import com.onlineCustomerServiceCenter.issue.entity.Issue;
 import com.onlineCustomerServiceCenter.issue.exception.IssueNotFoundException;
+import com.onlineCustomerServiceCenter.operator.dto.OperatorDetailsDto;
 import com.onlineCustomerServiceCenter.operator.entity.Operator;
 import com.onlineCustomerServiceCenter.operator.exceptions.IncorrectPasswordException;
 import com.onlineCustomerServiceCenter.operator.exceptions.NullException;
@@ -16,6 +17,8 @@ public interface OperatorService {
 
 
     String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException;
+
+    List<OperatorDetailsDto> getAllOperatorDetails();
 
     List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp;
 
