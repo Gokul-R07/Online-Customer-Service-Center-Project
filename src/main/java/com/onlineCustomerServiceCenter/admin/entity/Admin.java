@@ -3,64 +3,35 @@ package com.onlineCustomerServiceCenter.admin.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 
+@Data
 @Entity
 public class Admin {
     @Id
     @GeneratedValue()
     private Integer adminId;
+    @NotNull(message = "First Name cannot be null")
+    @NotBlank(message = "First Name cannot be blank")
     private String firstName;
+
+    @NotNull(message = "Last Name cannot be null")
+    @NotBlank(message = "Last Name cannot be blank")
     private String lastName;
+
+    @NotNull(message = "Email cannot be null")
+    @NotBlank(message = "Email cannot be blank")
+    @Email
     private String email;
+
+    @NotNull(message = "Password cannot be null")
+    @NotBlank(message = "Password cannot be blank")
+    @Pattern(regexp="[A-Za-z\\d@$!%*?&]{8,}$")
     private String password;
 
-    public Admin() {
-    }
 
-    public Admin(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Integer getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

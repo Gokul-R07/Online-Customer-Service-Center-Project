@@ -27,22 +27,33 @@ public class Operator {
     @NotBlank(message = "First Name cannot be blank")
     private String firstName;
 
+    @NotNull(message = "Last Name cannot be null")
+    @NotBlank(message = "Last Name cannot be blank")
     private String lastName;
+
     @NotNull(message = "Email cannot be null")
     @NotBlank(message = "Email cannot be blank")
     @Email
     private String email;
+
     @NotNull(message = "Password cannot be null")
     @NotBlank(message = "Password cannot be blank")
     @Pattern(regexp="[A-Za-z\\d@$!%*?&]{8,}$")
     private String password;
+
+    @NotNull(message = "Department Name cannot be null")
+    @NotBlank(message = "Department Name cannot be blank")
     private String departmentName;
 
     @NotNull(message = "Phone Number cannot be null")
     @NotBlank(message = "Phone Number cannot be blank")
     @Pattern(regexp="^\\d{10}$")
     private String phoneNumber;
+
+    @NotNull(message = "City cannot be null")
+    @NotBlank(message = "City cannot be blank")
     private String city;
+
     @OneToMany
     private List<Issue> customerIssues=new ArrayList<>();
 

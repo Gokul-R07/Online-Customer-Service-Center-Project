@@ -132,7 +132,7 @@ public class OperatorServiceImpl implements OperatorService {
                     dto.setLastName(operator.getLastName());
                     dto.setAllocatedIssueCount(operator.getCustomerIssues().size());
                     dto.setPendingIssueCount((int) operator.getCustomerIssues().stream()
-                            .filter(issue -> !issue.getTicketClose())
+                            .filter(issue -> issue.getIssueStatus() == IssueStatus.INPROGRESS)
                             .count());
                     return dto;
                 })
@@ -165,10 +165,10 @@ public class OperatorServiceImpl implements OperatorService {
         List<Issue> pendIssues = new ArrayList<>();
         if(operatorIdOptional.isEmpty()) {
             return Collections.emptyList();
-    }
+       }
     else{
         for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
-            if(issue.getIssueStatus().equals("PENDING")){
+            if(issue.getIssueStatus() == IssueStatus.INPROGRESS) {
                 pendIssues.add(issue);
             }
 
@@ -177,21 +177,17 @@ public class OperatorServiceImpl implements OperatorService {
         return pendIssues;
     }
 
+
+
     @Override
     public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid){
         Optional<Operator> operator = this.operatorRepository.findById(operatorid);
-        List<Issue> allocatedIssue = new ArrayList<>();
         if(operator.isEmpty()){
             return Collections.emptyList();
         }
         else{
-            for(Issue issue : operator.get().getCustomerIssues()){
-                if(issue.getIssueStatus().equals("PENDING")){
-                    allocatedIssue.add(issue);
-                }
-            }
+           return operator.get().getCustomerIssues();
         }
-        return allocatedIssue;
     }
 
     @Override
@@ -200,7 +196,7 @@ public class OperatorServiceImpl implements OperatorService {
         List<Issue> pendingIssue = new ArrayList<>();
 
         for(Issue issue : issues){
-            if(issue.getIssueStatus().equals("PENDING")){
+            if(issue.getIssueStatus()==IssueStatus.PENDING){
                 pendingIssue.add(issue);
             }
         }

@@ -53,9 +53,9 @@ public class OperatorController {
 
 
     @GetMapping("/pending-issue-by-id")
-    public List<Issue> getAllPendingIssue(@RequestParam Integer operatorid){
+    public List<Issue> getAllPendingIssue(@RequestParam Integer operatorId){
         try{
-            return operatorService.getAllPendingIssueByOperatorId(operatorid);
+            return operatorService.getAllPendingIssueByOperatorId(operatorId);
 
         }
         catch(PendingIssueExp e){
@@ -67,7 +67,7 @@ public class OperatorController {
     }
 
     @GetMapping("/Allocated-issue-by-id")
-    public List<Issue> getAllAllocatedIssueById(@RequestBody Integer operatorid){
+    public List<Issue> getAllAllocatedIssueById(@RequestParam Integer operatorid){
         try{
             return operatorService.getAllAllocatedIssueByOperatorId(operatorid);
         }
