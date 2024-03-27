@@ -51,7 +51,6 @@ public class OperatorServiceImpl implements OperatorService {
         }
 
         Optional<Operator> operatorOptional = operatorRepository.findOperatorByEmail(email);
-
         if (operatorOptional.isPresent()) {
             Operator operator = operatorOptional.get();
             if (operator.getPassword().equals(password)) {
@@ -65,8 +64,8 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public String changePassword(String email, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-        if(email==null){
+    public String changePassword(Integer operatorId, String oldPassword, String newPassword) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
+        if(operatorId==null){
             throw new NullException("Operator Id cannot be null");
         }
 
@@ -76,7 +75,7 @@ public class OperatorServiceImpl implements OperatorService {
         else if (newPassword==null) {
             throw new NullException("New password cannot be null");
         }
-        Optional<Operator> operatorOptional=this.operatorRepository.findOperatorByEmail(email);
+        Optional<Operator> operatorOptional=this.operatorRepository.findById(operatorId);
         if(operatorOptional.isPresent()){
             Operator foundOperator=operatorOptional.get();
             if(!foundOperator.getPassword().equals(oldPassword)){
@@ -87,7 +86,7 @@ public class OperatorServiceImpl implements OperatorService {
             return "Password changed successfully";
         }
         else{
-            throw new OperatorNotFoundException("Given Operator email does not exists:"+email);
+            throw new OperatorNotFoundException("Given Operator does not exists");
         }
 
     }
@@ -121,22 +120,8 @@ public class OperatorServiceImpl implements OperatorService {
     }
 
     @Override
-    public List<OperatorDetailsDto> getAllOperatorDetails() {
-        List<Operator> operators = operatorRepository.findAll();
-
-        return operators.stream()
-                .map(operator -> {
-                    OperatorDetailsDto dto = new OperatorDetailsDto();
-                    dto.setOperatorId(operator.getOperatorId());
-                    dto.setFirstName(operator.getFirstName());
-                    dto.setLastName(operator.getLastName());
-                    dto.setAllocatedIssueCount(operator.getCustomerIssues().size());
-                    dto.setPendingIssueCount((int) operator.getCustomerIssues().stream()
-                            .filter(issue -> issue.getIssueStatus() == IssueStatus.INPROGRESS)
-                            .count());
-                    return dto;
-                })
-                .collect(Collectors.toList());
+    public Operator getOperatorDetailsById(Integer operatorId) {
+        return this.operatorRepository.findById(operatorId).get();
     }
 
     @Override
@@ -162,31 +147,31 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public List<Issue> getAllPendingIssueByOperatorId(Integer operatorid) {
         Optional<Operator> operatorIdOptional= this.operatorRepository.findById(operatorid);
+        log.info(String.valueOf(operatorIdOptional));
         List<Issue> pendIssues = new ArrayList<>();
         if(operatorIdOptional.isEmpty()) {
             return Collections.emptyList();
-       }
-    else{
-        for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
-            if(issue.getIssueStatus() == IssueStatus.INPROGRESS) {
-                pendIssues.add(issue);
-            }
 
         }
-    }
+        else{
+            for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
+                if(issue.getIssueStatus() == IssueStatus.INPROGRESS) {
+                    pendIssues.add(issue);
+                }
+
+            }
+        }
         return pendIssues;
     }
 
-
-
     @Override
-    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid){
+    public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid) {
         Optional<Operator> operator = this.operatorRepository.findById(operatorid);
         if(operator.isEmpty()){
             return Collections.emptyList();
         }
         else{
-           return operator.get().getCustomerIssues();
+            return operator.get().getCustomerIssues();
         }
     }
 
@@ -196,7 +181,7 @@ public class OperatorServiceImpl implements OperatorService {
         List<Issue> pendingIssue = new ArrayList<>();
 
         for(Issue issue : issues){
-            if(issue.getIssueStatus()==IssueStatus.PENDING){
+            if(issue.getIssueStatus().equals("pending")){
                 pendingIssue.add(issue);
             }
         }
@@ -220,9 +205,6 @@ public class OperatorServiceImpl implements OperatorService {
 
     }
 
-    @Override
-    public Operator getOperatorDetailsById(Integer operatorId) {
-        return this.operatorRepository.findById(operatorId).get();
-    }
+
 
 }

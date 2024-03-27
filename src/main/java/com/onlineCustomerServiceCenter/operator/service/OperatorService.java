@@ -13,12 +13,13 @@ import com.onlineCustomerServiceCenter.operator.exceptions.*;
 public interface OperatorService {
     Operator loginOperator(String email, String password) throws OperatorNotFoundException, IncorrectPasswordException, NullException;
 
-    String changePassword(String email, String oldPassword,String newPassword) throws  OperatorNotFoundException, IncorrectPasswordException, NullException;
+    String changePassword(Integer operatorId, String oldPassword,String newPassword) throws  OperatorNotFoundException, IncorrectPasswordException, NullException;
 
 
     String addIssueSolution(Integer issueId, String solutionDescription,Integer operatorId) throws  IssueNotFoundException, NullException;
 
-    List<OperatorDetailsDto> getAllOperatorDetails();
+
+    Operator getOperatorDetailsById(Integer operatorId);
 
     List<Issue> getAllAllocatedIssue()throws AllocatedIssueExp;
 
@@ -31,7 +32,5 @@ public interface OperatorService {
     List<Issue> getAllPendingIssue() throws PendingIssueExp;
 
     Long getAllPendingIssueCount() throws PendingIssueExp;
-
-    Operator getOperatorDetailsById(Integer operatorId);
 
 }

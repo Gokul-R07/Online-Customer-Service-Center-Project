@@ -32,9 +32,9 @@ public class OperatorController {
     public Operator loginOperator(@RequestBody OperatorLoginDto operatorLoginDto) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
         return this.operatorService.loginOperator(operatorLoginDto.getEmail(), operatorLoginDto.getPassword());
     }
-    @PatchMapping("operator")
+    @PatchMapping("operator/change-password")
     public String changePassword(@RequestBody PasswordDto passwordDto) throws OperatorNotFoundException, IncorrectPasswordException, NullException {
-                return this.operatorService.changePassword(passwordDto.getEmail(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
+                return this.operatorService.changePassword(passwordDto.getOperatorId(),passwordDto.getOldPassword(),passwordDto.getNewPassword());
     }
 
     @PostMapping("operator/solution")
@@ -46,16 +46,13 @@ public class OperatorController {
         return this.operatorService.getOperatorDetailsById(operatorId);
     }
 
-    @GetMapping("all-operators")
-    public List<OperatorDetailsDto> getAllOperatorDetails(){
-        return this.operatorService.getAllOperatorDetails();
-    }
+
 
 
     @GetMapping("/pending-issue-by-id")
-    public List<Issue> getAllPendingIssue(@RequestParam Integer operatorId){
+    public List<Issue> getAllPendingIssue(@RequestParam Integer operatorid){
         try{
-            return operatorService.getAllPendingIssueByOperatorId(operatorId);
+            return operatorService.getAllPendingIssueByOperatorId(operatorid);
 
         }
         catch(PendingIssueExp e){
@@ -66,15 +63,14 @@ public class OperatorController {
 
     }
 
-    @GetMapping("/Allocated-issue-by-id")
-    public List<Issue> getAllAllocatedIssueById(@RequestParam Integer operatorid){
-        try{
+    @GetMapping("/allocated-issue-by-id/{operatorid}")
+    public List<Issue> getAllAllocatedIssueById(@PathVariable Integer operatorid) {
+        try {
             return operatorService.getAllAllocatedIssueByOperatorId(operatorid);
+        } catch (AllocatedIssueExp e) {
+            log.error("Error Occurred at getAllAllocatedIssueById: " + e.getMessage());
         }
-        catch (AllocatedIssueExp e){
-            log.error("Error Occured at getAllAllocatedIssueById "+ e);
-        }
-       return Collections.emptyList();
+        return Collections.emptyList();
     }
 
     @GetMapping("/Allocated-issue")
@@ -121,7 +117,6 @@ public class OperatorController {
         }
         return null;
     }
-
 
 
 }

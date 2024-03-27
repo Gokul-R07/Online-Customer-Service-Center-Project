@@ -6,7 +6,7 @@ import lombok.Data;
 
 public class PasswordDto {
 
-    String email;
+    Integer operatorId;
     String oldPassword;
     String newPassword;
 

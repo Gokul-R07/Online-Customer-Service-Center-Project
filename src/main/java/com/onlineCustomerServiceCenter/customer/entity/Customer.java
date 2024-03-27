@@ -45,8 +45,10 @@ public class Customer {
     private String city;
     @NotNull(message = "customer phoneNumber cannot be null")
     @NotBlank(message = "customer name cannot be null")
+    @Pattern(regexp = "\\d{10}$",message="phoneNumber should contain 10 digit number")
     private String phoneNumber;
-    @OneToMany(fetch = FetchType.EAGER)
+
+    @OneToMany()
     private List<Issue> issues = new ArrayList<>();
 
 
