@@ -38,7 +38,7 @@ public class Customer {
     private String email;
     @NotNull(message = "customer password cannot be null")
     @NotBlank(message = "customer password cannot be blank")
-    @Pattern(regexp = "[A-Za-z\\d@$!%*?&]{8}$", message="password should contain 8 characters")
+    @Pattern(regexp = "[A-Za-z\\d@$!%*?&]{8,}$", message="password should contain 8 characters")
     private String password;
     @NotNull(message = "customer city cannot be null")
     @NotBlank(message = "customer city cannot be null")

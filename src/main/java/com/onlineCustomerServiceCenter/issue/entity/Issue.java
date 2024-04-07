@@ -3,10 +3,7 @@ package com.onlineCustomerServiceCenter.issue.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -49,7 +46,7 @@ public class Issue {
         this.issueUpdatedDate = null;
         this.issueStatus = IssueStatus.PENDING;
         this.issueDescription = issueDescription;
-        this.ticketClose = false;
+        this.ticketClose = null;
         this.solutions = null;
     }
 

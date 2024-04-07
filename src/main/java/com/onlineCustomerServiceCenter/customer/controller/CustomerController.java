@@ -4,11 +4,13 @@ import com.onlineCustomerServiceCenter.customer.dto.CustomerLoginDto;
 import com.onlineCustomerServiceCenter.customer.entity.Customer;
 import com.onlineCustomerServiceCenter.customer.exceptions.*;
 import com.onlineCustomerServiceCenter.customer.service.CustomerService;
+import com.onlineCustomerServiceCenter.solution.dto.SolutionIdDto;
 import com.onlineCustomerServiceCenter.solution.entity.Solution;
 import com.onlineCustomerServiceCenter.solution.exceptions.SolutionException;
 import com.onlineCustomerServiceCenter.solution.service.SolutionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -50,13 +52,6 @@ public class CustomerController {
     public Customer deleteCustomerByEmail(@PathVariable String email) throws CustomerDeleteException {
         return this.customerService.deleteCustomerByEmail(email);
     }
-    @PatchMapping("customer/solution/accept")
-    public String acceptSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
-         return this.solutionService.acceptSolution(issueId,solutionId);
-    }
-    @PatchMapping("customer/solution/reject")
-    public String rejectSolution( @RequestParam Integer issueId,@RequestParam Integer solutionId) throws SolutionException{
-         return this.solutionService.rejectSolution(issueId,solutionId);
-    }
+
 }
 

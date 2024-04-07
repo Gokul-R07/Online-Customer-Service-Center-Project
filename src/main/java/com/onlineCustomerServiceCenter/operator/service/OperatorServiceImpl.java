@@ -155,7 +155,7 @@ public class OperatorServiceImpl implements OperatorService {
         }
         else{
             for(Issue issue: operatorIdOptional.get().getCustomerIssues()){
-                if(issue.getIssueStatus() == IssueStatus.INPROGRESS) {
+                if(issue.getIssueStatus().equals("pending")){
                     pendIssues.add(issue);
                 }
 
@@ -167,13 +167,19 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public List<Issue> getAllAllocatedIssueByOperatorId(Integer operatorid) {
         Optional<Operator> operator = this.operatorRepository.findById(operatorid);
-        if(operator.isEmpty()){
+        List<Issue> allocatedIssue = new ArrayList<>();
+        if (operator.isEmpty()) {
             return Collections.emptyList();
+        } else {
+            for (Issue issue : operator.get().getCustomerIssues()) {
+                if(issue.getIssueStatus()==IssueStatus.INPROGRESS){
+                    allocatedIssue.add(issue);
+                }
+            }
         }
-        else{
-            return operator.get().getCustomerIssues();
-        }
+        return allocatedIssue;
     }
+
 
     @Override
     public List<Issue> getAllPendingIssue() {

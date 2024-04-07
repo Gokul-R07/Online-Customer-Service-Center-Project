@@ -23,7 +23,7 @@ public interface IssueService {
 
     List<Issue> getAllIssuesByCustomerId(Integer customerId) throws CustomerNotFoundException;
 
-    Issue deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException;
+    String deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException;
 
     Issue getIssueByIssueId(Integer issueId) throws IssueNotFoundException;
 }

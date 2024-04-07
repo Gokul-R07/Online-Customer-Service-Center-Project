@@ -33,7 +33,7 @@ public class IssueController {
     }
 
     @DeleteMapping("issue/delete/{customerId}/{issueId}")
-    public Issue deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
+    public String deleteIssueById(@PathVariable Integer customerId, @PathVariable Integer issueId) throws IssueNotFoundException, CustomerNotFoundException {
        return this.issueService.deleteIssueFromCustomer(customerId, issueId);
     }
 

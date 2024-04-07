@@ -110,7 +110,7 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
+    public String deleteIssueFromCustomer(Integer customerId, Integer issueId) throws CustomerNotFoundException, IssueNotFoundException {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id: " + customerId));
 
@@ -121,9 +121,11 @@ public class IssueServiceImpl implements IssueService {
         if (issueOptional.isPresent()) {
             Issue deletedIssue = issueOptional.get();
             customer.getIssues().remove(deletedIssue);
-            customerRepository.save(customer);
             issueRepository.deleteById(issueId);
-            return deletedIssue;
+
+            customerRepository.save(customer);
+
+            return "Deleted successfully";
         } else {
             throw new IssueNotFoundException("Issue not found with given id: " + issueId);
         }
